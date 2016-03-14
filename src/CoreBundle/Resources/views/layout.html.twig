@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>{% block title %}Camarin{% endblock %}</title>
+
+        {% block stylesheet %}
+            {# Utilisation de asset() au lieu du block styleheets, sinon problème avec les fonts #}
+            <link type="text/css" rel="stylesheet" href="{{ asset("bundles/core/css/materialize.min.css") }}" media="screen,projection" />
+        {% endblock %}
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+
+    <body>
+        {% include 'CoreBundle::menu.html.twig' %}
+
+        <div class="container">
+            <div class="row">
+                {% include 'CoreBundle::flash.html.twig' %}
+
+                <div class="section">
+                    {% block body_title %}{% endblock %}
+
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+        {% block javascript %}
+            {% javascripts
+                'bundles/core/js/jquery-2.2.1.min.js'
+                'bundles/core/js/materialize.min.js'
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>

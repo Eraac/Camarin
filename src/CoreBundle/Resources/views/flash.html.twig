@@ -1,0 +1,13 @@
+{% set colors = {'notice': 'blue', 'success': 'green', 'warning': 'orange', 'error': 'red'} %}
+
+{% for label, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        <div class="col s12 m12 l12">
+            <div class="card-panel {% if colors[label] is defined %}{{ colors[label] }}{% endif %}">
+                <span class="white-text">
+                    {{ flash }}
+                </span>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
