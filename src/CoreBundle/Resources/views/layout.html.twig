@@ -7,12 +7,11 @@
         <title>{% block title %}Camarin{% endblock %}</title>
 
         {% block stylesheet %}
-            {# Utilisation de asset() au lieu du block styleheets, sinon problème avec les fonts #}
-            <link type="text/css" rel="stylesheet" href="{{ asset("bundles/core/css/materialize.min.css") }}" media="screen,projection" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
         {% endblock %}
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
     </head>
 
     <body>
@@ -31,12 +30,8 @@
         </div>
 
         {% block javascript %}
-            {% javascripts
-                'bundles/core/js/jquery-2.2.1.min.js'
-                'bundles/core/js/materialize.min.js'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+            <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
         {% endblock %}
     </body>
 </html>
