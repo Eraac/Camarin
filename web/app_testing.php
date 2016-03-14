@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = require __DIR__.'/../app/autoload.php';
 include_once __DIR__.'/../var/bootstrap.php.cache';
 
-$apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader("camarin_", $loader);
+/*$apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader("camarin_", $loader);
 $loader->unregister();
-$apcLoader->register(true);
+$apcLoader->register(true);*/
 
 $kernel = new AppKernel('test', false);
 $kernel->loadClassCache();
