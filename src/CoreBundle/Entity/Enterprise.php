@@ -25,7 +25,8 @@ class Enterprise
      */
     private $id;
 
-    /**
+    /**tr
+     *
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
