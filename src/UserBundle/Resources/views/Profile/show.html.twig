@@ -1,0 +1,10 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="col s12">
+        {% include "FOSUserBundle:Profile:show_content.html.twig" %}
+        <a class="waves-effect waves-light btn orange" href="{{ url('fos_user_profile_edit') }}">
+            {{ 'user.profile.edit'|trans }}
+        </a>
+    </div>
+{% endblock body %}

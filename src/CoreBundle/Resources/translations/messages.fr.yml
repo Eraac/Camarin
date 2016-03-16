@@ -1,0 +1,6 @@
+core:
+    nav:
+        user:
+            account: "Mon compte"
+            login: "Se connecter"
+            logout: "Déconnexion"

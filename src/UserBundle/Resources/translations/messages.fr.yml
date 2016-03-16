@@ -1,0 +1,7 @@
+user:
+    profile:
+        change-password: "Changer son mot de passe"
+        edit: "Modifier son compte"
+    title:
+        profile: "Compte"
+        login: "Formulaire de connexion"
