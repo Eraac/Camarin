@@ -25,7 +25,7 @@ class Enterprise
      */
     private $id;
 
-    /**tr
+    /**
      *
      * @var string
      *
