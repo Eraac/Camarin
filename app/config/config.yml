@@ -76,6 +76,3 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: UserBundle\Entity\User
-
-knp_doctrine_behaviors:
-    timestampable: true
