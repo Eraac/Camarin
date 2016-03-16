@@ -1,3 +1,7 @@
+core_enterprise:
+    resource: "@CoreBundle/Resources/config/routing/enterprise.yml"
+    prefix:   /enterprise
+
 core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Index:index }

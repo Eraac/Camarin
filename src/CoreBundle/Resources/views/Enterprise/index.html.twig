@@ -1,0 +1,45 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+
+{% block body %}
+    <h1>Enterprise list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Slug</th>
+                <th>Contact</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for enterprise in enterprises %}
+            <tr>
+                <td><a href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.id }}</a></td>
+                <td>{{ enterprise.slug }}</td>
+                <td>{{ enterprise.contact }}</td>
+                <td>{% if enterprise.createdAt %}{{ enterprise.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if enterprise.updatedAt %}{{ enterprise.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('core_enterprise_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
