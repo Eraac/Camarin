@@ -1,16 +1,10 @@
-{% extends 'CoreBundle::layout.html.twig' %}
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
-{% block body %}
-    <h1>Enterprise creation</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('core_enterprise_index') }}">Back to the list</a>
-        </li>
-    </ul>
+{% block body_content %}
+    <div class="col s6 offset-s3">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {% include 'CoreBundle:Form:button/new.html.twig' with {'color': 'green'} %}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

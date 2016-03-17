@@ -1,45 +1,46 @@
-{% extends 'CoreBundle::layout.html.twig' %}
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
 {% block body %}
-    <h1>Enterprise list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Contact</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for enterprise in enterprises %}
-            <tr>
-                <td><a href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.id }}</a></td>
-                <td>{{ enterprise.slug }}</td>
-                <td>{{ enterprise.contact }}</td>
-                <td>{% if enterprise.createdAt %}{{ enterprise.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if enterprise.updatedAt %}{{ enterprise.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="col s12">
+        <a class="waves-effect waves-light btn right green" href="{{ path('core_enterprise_new') }}">
+            {{ "core.enterprise.add"|trans }}
+        </a>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('core_enterprise_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <div class="col s12">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>{{ "core.enterprise.name"|trans }}</th>
+                    <th>{{ "core.enterprise.contact"|trans }}</th>
+                    <th>{{ "core.enterprise.time_left"|trans }}</th>
+                    <th>{{ "core.enterprise.action"|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for enterprise in enterprises %}
+                <tr>
+                    <td>{{ enterprise.name }}</td>
+                    <td>{{ enterprise.contact }}</td>
+                    <td>0 {# TODO #}</td>
+                    <td>
+                        <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ "core.show"|trans }}</a>
+                        <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ "core.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
 {% endblock %}

@@ -1,44 +1,30 @@
-{% extends 'CoreBundle::layout.html.twig' %}
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
-{% block body %}
-    <h1>Enterprise</h1>
+{%- block content_title -%}
+    {{ enterprise.name }}
+{%- endblock -%}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ enterprise.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ enterprise.slug }}</td>
-            </tr>
-            <tr>
-                <th>Contact</th>
-                <td>{{ enterprise.contact }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if enterprise.createdAt %}{{ enterprise.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if enterprise.updatedAt %}{{ enterprise.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{%- block actions -%}
+    <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
+    {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    {{ parent() }}
+{%- endblock -%}
 
-    <ul>
-        <li>
-            <a href="{{ path('core_enterprise_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+{% block body_content %}
+
+    <div class="col s5">
+        <div class="card-panel">
+            {{ "core.enterprise.time_left"|trans }} : 0h {# TODO #}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
 {% endblock %}

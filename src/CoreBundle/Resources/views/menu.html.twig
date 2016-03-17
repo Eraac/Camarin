@@ -5,6 +5,7 @@
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if is_granted("ROLE_USER") %}
+                    <li><a href="{{ url("core_enterprise_index") }}">{{ "core.nav.enterprise"|trans }}</a></li>
                     <li><a href="{{ url("fos_user_profile_edit") }}">{{ "core.nav.user.account"|trans }}</a></li>
                     <li><a href="{{ url("fos_user_security_logout") }}">{{ "core.nav.user.logout"|trans }}</a></li>
                 {% else %}

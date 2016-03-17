@@ -1,0 +1,9 @@
+{% extends 'CoreBundle:Form:button/base.html.twig' %}
+
+{%- block value -%}
+    {{ "core.form.button.delete"|trans }}
+{%- endblock -%}
+
+{%- block color -%}
+    {{ color is defined ? color : 'red' }}
+{%- endblock -%}

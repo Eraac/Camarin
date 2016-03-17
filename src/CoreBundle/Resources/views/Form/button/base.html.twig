@@ -1,0 +1,2 @@
+{% set float = float is defined ? float : 'right' %}
+<input class="waves-effect waves-light btn {{ float }} {% block color %}{% endblock %}" type="submit" value="{% block value %}{% endblock %}">

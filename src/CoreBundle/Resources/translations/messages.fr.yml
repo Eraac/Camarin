@@ -4,3 +4,23 @@ core:
             account: "Mon compte"
             login: "Se connecter"
             logout: "Déconnexion"
+        enterprise: "Entreprise"
+    title:
+        enterprise: "Entreprise"
+    form:
+        button:
+            new: "Ajouter"
+            edit: "Mettre à jour"
+            delete: "Supprimer"
+    back: "Retour à la liste"
+    edit: "Modifier"
+    show: "Voir"
+    close: "Fermer"
+    confirm:
+        delete: "Confirmation de la suppression"
+    enterprise:
+        add: "Ajouter une entreprise"
+        name: "Nom"
+        contact: "Contact"
+        time_left: "Temps restant"
+        action: "Actions"
