@@ -24,3 +24,8 @@ core:
         contact: "Contact"
         time_left: "Temps restant"
         action: "Actions"
+    success:
+        enterprise:
+            add: "Entreprise ajoutée"
+            edit: "Entreprise modifiée"
+            delete: "Entreprise supprimée"

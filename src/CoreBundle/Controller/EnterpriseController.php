@@ -41,6 +41,8 @@ class EnterpriseController extends CoreController
             $em->persist($enterprise);
             $em->flush();
 
+            $this->addSuccess("core.success.enterprise.add");
+
             return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
         }
 
@@ -79,6 +81,8 @@ class EnterpriseController extends CoreController
             $em->persist($enterprise);
             $em->flush();
 
+            $this->addSuccess("core.success.enterprise.edit");
+
             return $this->redirectToRoute('core_enterprise_edit', ['slug' => $enterprise->getSlug()]);
         }
 
@@ -102,6 +106,8 @@ class EnterpriseController extends CoreController
             $em = $this->getEm();
             $em->remove($enterprise);
             $em->flush();
+
+            $this->addSuccess("core.success.enterprise.delete");
         }
 
         return $this->redirectToRoute('core_enterprise_index');
