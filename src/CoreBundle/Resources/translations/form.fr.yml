@@ -3,3 +3,7 @@ core:
         enterprise:
             name: "Nom"
             contact: "Contact"
+        plan:
+            time: "Temps"
+            expireAt: "Date d'expiration"
+            description: "Description"

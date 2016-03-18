@@ -22,3 +22,8 @@ core_enterprise_delete:
     path:     /{slug}/delete
     defaults: { _controller: "CoreBundle:Enterprise:delete" }
     methods:  DELETE
+
+core_enterprise_add_plan:
+    path:     /{slug}/add/plans
+    defaults: { _controller: "CoreBundle:Enterprise:addPlan" }
+    methods:  POST

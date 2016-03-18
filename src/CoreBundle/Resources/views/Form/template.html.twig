@@ -23,15 +23,16 @@
 {%- endblock datetime_widget -%}
 
 {%- block date_widget -%}
-    {% set size = "col s12 m4 l4" %}
-    <div class="{{ size }}">
-        {{ form_widget(form.day) }}
-    </div>
-    <div class="{{ size }}">
-        {{ form_widget(form.month) }}
-    </div>
-    <div class="{{ size }}">
-        {{ form_widget(form.year) }}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.day) }}
+        </div>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.month) }}
+        </div>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.year) }}
+        </div>
     </div>
 {%- endblock date_widget -%}
 
@@ -129,6 +130,24 @@
 {%- endblock form_row -%}
 
 {%- block datetime_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block date_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block time_row -%}
     {% set size = size|default('s12 m12 l12') %}
     <div class="col {{ size }}">
         {{- form_errors(form) -}}

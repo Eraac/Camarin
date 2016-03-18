@@ -48,6 +48,20 @@ class Plan
      */
     private $description;
 
+    /**
+     * @var CoreBundle\Entity\Enterprise
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Enterprise")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\Valid
+     */
+    private $enterprise;
+
+
+    public function __construct()
+    {
+        $this->expireAt = new \DateTime('now + 1 year');
+    }
 
     /**
      * Get id
@@ -130,5 +144,28 @@ class Plan
     {
         return $this->description;
     }
-}
 
+    /**
+     * Set enterprise
+     *
+     * @param \CoreBundle\Entity\Enterprise $enterprise
+     *
+     * @return Plan
+     */
+    public function setEnterprise(\CoreBundle\Entity\Enterprise $enterprise = null)
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    /**
+     * Get enterprise
+     *
+     * @return \CoreBundle\Entity\Enterprise
+     */
+    public function getEnterprise()
+    {
+        return $this->enterprise;
+    }
+}

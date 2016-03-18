@@ -2,10 +2,12 @@
 
 namespace CoreBundle\Controller;
 
+use CoreBundle\Entity\Plan;
 use Symfony\Component\HttpFoundation\Request;
 
 use CoreBundle\Entity\Enterprise;
 use CoreBundle\Form\Type\EnterpriseType;
+use CoreBundle\Form\Type\PlanType;
 
 /**
  * Enterprise controller.
@@ -62,6 +64,7 @@ class EnterpriseController extends CoreController
 
         return $this->render('CoreBundle:Enterprise:show.html.twig', [
             'enterprise' => $enterprise,
+            'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
     }
@@ -114,6 +117,30 @@ class EnterpriseController extends CoreController
     }
 
     /**
+     * Add Plan entity to an Enterprise entity
+     *
+     * @param Request $request
+     * @param Enterprise $enterprise
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addPlanAction(Request $request, Enterprise $enterprise)
+    {
+        $plan = new Plan();
+        $form = $this->createPlanForm($enterprise, $plan);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getEm();
+            $em->persist($plan);
+            $em->flush();
+
+            $this->addSuccess("core.success.enterprise.add_plan");
+        }
+
+        return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
+    }
+
+    /**
      * Creates a form to delete a Enterprise entity.
      *
      * @param Enterprise $enterprise The Enterprise entity
@@ -126,6 +153,27 @@ class EnterpriseController extends CoreController
             ->setAction($this->generateUrl('core_enterprise_delete', ['slug' => $enterprise->getSlug()]))
             ->setMethod('DELETE')
             ->getForm()
+        ;
+    }
+
+    /**
+     * Creates a form to add Plan to an Enterprise entity.
+     *
+     * @param Enterprise $enterprise The Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createPlanForm(Enterprise $enterprise, Plan $plan = null)
+    {
+        if (is_null($plan)) {
+            $plan = new Plan();
+        }
+
+        $plan->setEnterprise($enterprise);
+
+        return $this->createForm(PlanType::class, $plan, [
+            'action' => $this->generateUrl('core_enterprise_add_plan', ['slug' => $enterprise->getSlug()])
+        ])
         ;
     }
 

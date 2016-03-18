@@ -5,6 +5,7 @@
 {%- endblock -%}
 
 {%- block actions -%}
+    <a class="waves-effect waves-light btn modal-trigger green" href="#addPlan">{{ "core.confirm.add_plan"|trans }}</a>
     <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
     {{ parent() }}
@@ -18,6 +19,24 @@
         </div>
     </div>
 
+    <!-- Modal Structure -->
+    <div id="addPlan" class="modal">
+        <div class="modal-content">
+            <h4>{{ "core.confirm.add_plan"|trans }}</h4>
+
+            {{ form_start(add_plan_form) }}
+                {{ form_row(add_plan_form.time, {'size': 's5'}) }}
+                {{ form_row(add_plan_form.expireAt, {'size': 's7'}) }}
+                {{ form_row(add_plan_form.description) }}
+                {% include 'CoreBundle:Form:button/new.html.twig' %}
+            {{ form_end(add_plan_form) }}
+        </div>
+
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascript %}
@@ -25,6 +44,7 @@
     <script>
         $(document).ready(function(){
             $('.modal-trigger').leanModal();
+            $('select').material_select();
         });
     </script>
 {% endblock %}
