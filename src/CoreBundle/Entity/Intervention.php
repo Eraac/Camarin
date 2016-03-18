@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -28,13 +29,15 @@ class Intervention
      * @var \DateTime
      *
      * @ORM\Column(name="time", type="time")
+     * @Assert\Time()
      */
     private $time;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
+     * @Assert\Date()
      */
     private $date;
 

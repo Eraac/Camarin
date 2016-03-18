@@ -4,6 +4,7 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -30,6 +31,8 @@ class Enterprise
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -43,6 +46,7 @@ class Enterprise
      * @var string
      *
      * @ORM\Column(name="contact", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $contact;
 
