@@ -36,7 +36,6 @@ abstract class CoreController extends Controller
 
     /**
      * @param string $message
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function addSuccess($message)
     {
