@@ -1,5 +1,10 @@
 {% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
+{%- block actions -%}
+    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ 'core.show'|trans }}</a>
+    {{ parent() }}
+{%- endblock -%}
+
 {% block body_content %}
     <div class="col s6 offset-s3">
         {{ form_start(edit_form) }}
