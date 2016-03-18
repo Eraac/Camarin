@@ -24,7 +24,15 @@ core:
         name: "Nom"
         contact: "Contact"
         time_left: "Temps restant"
+        time: "Temps"
+        expire_at: "Expire le"
+        current_plan: "Forfait en cours"
+        no_plan: "Aucun forfait en cours"
         action: "Actions"
+    plan:
+        dropdown: "Forfait"
+        add: "Ajouter"
+        see: "Voir"
     success:
         enterprise:
             add: "Entreprise ajoutée"

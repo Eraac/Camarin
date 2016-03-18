@@ -1,6 +1,7 @@
 <?php
 
 namespace CoreBundle\Repository;
+use CoreBundle\Entity\Enterprise;
 
 /**
  * PlanRepository
@@ -10,4 +11,27 @@ namespace CoreBundle\Repository;
  */
 class PlanRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLastPlans(Enterprise $enterprise, $limit)
+    {
+        $qb = $this->createQueryBuilder('p')
+                    ->where('p.enterprise = :enterprise')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('p.expireAt', 'DESC')
+                    ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findCurrentPlans(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('p')
+                    ->where('p.enterprise = :enterprise')
+                    ->andWhere('p.expireAt > :now')
+                    ->setParameters([
+                        'enterprise' => $enterprise,
+                        'now' => new \DateTime()
+                    ]);
+
+        return $qb->getQuery()->getResult();
+    }
 }

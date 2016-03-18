@@ -5,7 +5,13 @@
 {%- endblock -%}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn modal-trigger green" href="#addPlan">{{ "core.confirm.add_plan"|trans }}</a>
+    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown"|trans }}</a>
+
+    <ul id="menuPlan" class='dropdown-content'>
+        <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.add"|trans }}</a></li>
+        <li><a href="#!">{{ "core.plan.see"|trans }}</a></li> {# TODO #}
+    </ul>
+
     <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
     {{ parent() }}
@@ -15,8 +21,29 @@
 
     <div class="col s5">
         <div class="card-panel">
-            {{ "core.enterprise.time_left"|trans }} : 0h {# TODO #}
+            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO #}
         </div>
+
+        <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
+        {% if current_plans is not empty %}
+            <ul class="collection">
+                {% for plan in current_plans %}
+                    <li class="collection-item">
+                        <div>
+                            <div>
+                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan.time|date('H\\hi') }}
+                                <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d/m/Y') }}</span>
+                            </div>
+
+                            {{ plan.description }}
+                            <a href="#!" class="secondary-content"><i class="material-icons">mode edit</i></a> {# TODO link edit #}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ "core.enterprise.no_plan"|trans }}
+        {% endif %}
     </div>
 
     <!-- Modal Structure -->

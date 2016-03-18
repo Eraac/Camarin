@@ -61,11 +61,13 @@ class EnterpriseController extends CoreController
     public function showAction(Enterprise $enterprise)
     {
         $deleteForm = $this->createDeleteForm($enterprise);
+        $currentPlans = $this->getRepository('CoreBundle:Plan')->findCurrentPlans($enterprise);
 
         return $this->render('CoreBundle:Enterprise:show.html.twig', [
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
             'delete_form' => $deleteForm->createView(),
+            'current_plans' => $currentPlans,
         ]);
     }
 
