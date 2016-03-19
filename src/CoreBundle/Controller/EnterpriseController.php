@@ -64,6 +64,8 @@ class EnterpriseController extends CoreController
         $deleteForm = $this->createDeleteForm($enterprise);
         $currentPlans = $this->getRepository('CoreBundle:Plan')->findCurrentPlans($enterprise);
 
+        // TODO list last interventions
+
         return $this->render('CoreBundle:Enterprise:show.html.twig', [
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
@@ -90,7 +92,22 @@ class EnterpriseController extends CoreController
         ]);
     }
 
-    // TODO add show intervention
+    /**
+     * Find and displays Plan entities of an Enterprise entity
+     *
+     * @param Enterprise $enterprise
+     */
+    public function showInterventionAction(Enterprise $enterprise)
+    {
+        $interventions = $this->getRepository('CoreBundle:Intervention')->findByEnterprise($enterprise);
+        // TODO add pagination
+
+        return $this->render('CoreBundle:Enterprise:intervention.html.twig', [
+            'enterprise' => $enterprise,
+            'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
+            'interventions' => $interventions,
+        ]);
+    }
 
     /**
      * Displays a form to edit an existing Enterprise entity.

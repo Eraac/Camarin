@@ -21,7 +21,7 @@ class HandleIntervention
         $plan = $this->getNextExpiredAndAvailablePlan($enterprise);
 
         if (is_null($plan) || $this->enoughTime($plan, $intervention)) {
-            $this->persist($intervention, $plan);
+            $this->persist($enterprise, $intervention, $plan);
         } else {
             $this->splitIntervention($enterprise, $plan, $intervention);
         }
@@ -39,7 +39,7 @@ class HandleIntervention
             $intervention->setTime($this->makeDate($maxTime));
         }
 
-        $this->persist($intervention, $plan);
+        $this->persist($enterprise, $intervention, $plan);
 
         if ($timeLeft > 0) {
             $nextPlan = $this->getNextExpiredAndAvailablePlan($enterprise);
@@ -52,7 +52,7 @@ class HandleIntervention
             dump($childIntervention);
 
             if (is_null($nextPlan)) {
-                $this->persist($childIntervention, $nextPlan);
+                $this->persist($enterprise, $childIntervention, $nextPlan);
             } else {
                 $this->splitIntervention($enterprise, $nextPlan, $childIntervention);
             }
@@ -70,9 +70,10 @@ class HandleIntervention
         return $plan;
     }
 
-    private function persist(Intervention $intervention, Plan $plan = null)
+    private function persist(Enterprise $enterprise, Intervention $intervention, Plan $plan = null)
     {
         $intervention->setPlan($plan);
+        $intervention->setEnterprise($enterprise);
         $em = $this->doctrine->getManager();
         $em->persist($intervention);
         $em->flush();

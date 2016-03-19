@@ -2,6 +2,8 @@
 
 namespace CoreBundle\Repository;
 
+use CoreBundle\Entity\Enterprise;
+
 /**
  * InterventionRepository
  *
@@ -16,6 +18,18 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
                     ->leftJoin('i.child', 'c')
                     ->addSelect('c')
                     ->where('i.parent IS NULL');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->leftJoin('i.child', 'c')
+            ->addSelect('c')
+            ->where('i.parent IS NULL')
+            ->andWhere('i.enterprise = :enterprise')
+            ->setParameter('enterprise', $enterprise);
 
         return $qb->getQuery()->getResult();
     }

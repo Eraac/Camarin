@@ -74,6 +74,15 @@ class Intervention
      */
     private $parent;
 
+    /**
+     * @var CoreBundle\Entity\Enterprise
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Enterprise")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\Valid
+     */
+    private $enterprise;
+
 
     public function __construct()
     {
@@ -251,5 +260,29 @@ class Intervention
         }
 
         return $seconds;
+    }
+
+    /**
+     * Set enterprise
+     *
+     * @param \CoreBundle\Entity\Enterprise $enterprise
+     *
+     * @return Intervention
+     */
+    public function setEnterprise(\CoreBundle\Entity\Enterprise $enterprise = null)
+    {
+        $this->enterprise = $enterprise;
+
+        return $this;
+    }
+
+    /**
+     * Get enterprise
+     *
+     * @return \CoreBundle\Entity\Enterprise
+     */
+    public function getEnterprise()
+    {
+        return $this->enterprise;
     }
 }

@@ -1,22 +1,25 @@
 {% extends 'CoreBundle:Intervention:layout.html.twig' %}
 
-{% block body %}
+{% block actions %}
+    <a class="modal-trigger waves-effect waves-light btn green" href="#addIntervention">{{ "core.intervention.add"|trans }}</a>
+    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
+{% endblock %}
+
+{% block body_content %}
 
     <div class="col s12">
         <table class="striped">
             <thead>
-                <tr>
-                    <th>{{ "core.intervention.enterprise"|trans }}</th>
-                    <th>{{ "core.intervention.time"|trans }}</th>
-                    <th>{{ "core.intervention.date"|trans }}</th>
-                    <th>{{ "core.intervention.description"|trans }}</th>
-                    <th>{{ "core.action"|trans }}</th>
-                </tr>
+            <tr>
+                <th>{{ "core.intervention.time"|trans }}</th>
+                <th>{{ "core.intervention.date"|trans }}</th>
+                <th>{{ "core.intervention.description"|trans }}</th>
+                <th>{{ "core.action"|trans }}</th>
+            </tr>
             </thead>
             <tbody>
             {% for intervention in interventions %}
                 <tr>
-                    <td>{# TODO add enterprise name #}</td>
                     <td>{{ intervention|time }}</td>
                     <td>{{ intervention.date|date('d-m-Y') }}</td>
                     <td>{{ intervention.description }}</td>
@@ -30,4 +33,16 @@
         </table>
     </div>
 
+    {% include 'CoreBundle:Template:modal_add_intervention.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
 {% endblock %}

@@ -52,10 +52,12 @@ core:
         createdAt: "Créé le"
         updatedAt: "Mise à jour le"
     intervention:
+        add: "Ajouter une intervention"
         time: "Temps"
         date: "Date"
         description: "Description"
         dropdown: "Intervention"
+        enterprise: "Entreprise"
     success:
         enterprise:
             add: "Entreprise ajoutée"
