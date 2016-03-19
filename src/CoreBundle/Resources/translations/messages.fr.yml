@@ -31,8 +31,8 @@ core:
         action: "Actions"
     plan:
         dropdown: "Forfait"
-        add: "Ajouter"
-        see: "Voir"
+        add: "ajouter"
+        see: "voir"
     success:
         enterprise:
             add: "Entreprise ajoutée"
