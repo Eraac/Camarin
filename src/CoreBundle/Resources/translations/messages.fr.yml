@@ -6,9 +6,11 @@ core:
             logout: "Déconnexion"
         enterprise: "Entreprise"
         plan: "Forfait"
+        intervention: "Intervention"
     title:
         enterprise: "Entreprise"
         plan: "Forfait"
+        intervention: "Intervention"
     form:
         button:
             new: "Ajouter"
@@ -19,9 +21,12 @@ core:
     show: "Voir"
     close: "Fermer"
     action: "Actions"
+    see: "voir"
+    add: "ajouter"
     confirm:
         delete: "Confirmation de la suppression"
         add_plan: "Ajouter un forfait"
+        add_intervention: "Ajouter une intervention"
     enterprise:
         see: "Voir l'entreprise"
         add: "Ajouter une entreprise"
@@ -46,6 +51,11 @@ core:
         description: "Description"
         createdAt: "Créé le"
         updatedAt: "Mise à jour le"
+    intervention:
+        time: "Temps"
+        date: "Date"
+        description: "Description"
+        dropdown: "Intervention"
     success:
         enterprise:
             add: "Entreprise ajoutée"

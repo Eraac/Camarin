@@ -4,6 +4,7 @@
             <a href="{{ url("core_homepage") }}" class="brand-logo">Camarin</a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{ url("core_intervention_index") }}">{{ "core.nav.intervention"|trans }}</a></li>
                 <li><a href="{{ url("core_plan_index") }}">{{ "core.nav.plan"|trans }}</a></li>
                 <li><a href="{{ url("core_enterprise_index") }}">{{ "core.nav.enterprise"|trans }}</a></li>
                 {% if is_granted("ROLE_USER") %}

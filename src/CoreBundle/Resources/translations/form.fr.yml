@@ -7,3 +7,7 @@ core:
             time: "Temps"
             expireAt: "Date d'expiration"
             description: "Description"
+        intervention:
+            time: "Temps"
+            date: "Date"
+            description: "Description"

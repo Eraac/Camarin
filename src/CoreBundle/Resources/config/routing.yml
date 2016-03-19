@@ -6,6 +6,10 @@ core_plan:
     resource: "@CoreBundle/Resources/config/routing/plan.yml"
     prefix:   /plan
 
+core_intervention:
+    resource: "@CoreBundle/Resources/config/routing/intervention.yml"
+    prefix:   /intervention
+
 core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Index:index }

@@ -73,6 +73,11 @@ class Intervention
     private $parent;
 
 
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
+
     /**
      * Get id
      *

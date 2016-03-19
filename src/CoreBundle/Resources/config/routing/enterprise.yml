@@ -13,6 +13,11 @@ core_enterprise_show_plans:
     defaults:  { _controller: "CoreBundle:Enterprise:showPlan" }
     methods:   GET
 
+core_enterprise_show_interventions:
+    path:      /{slug}/interventions
+    defaults:  { _controller: "CoreBundle:Enterprise:showIntervention" }
+    methods:   GET
+
 core_enterprise_new:
     path:     /new
     defaults: { _controller: "CoreBundle:Enterprise:new" }
@@ -29,6 +34,11 @@ core_enterprise_delete:
     methods:  DELETE
 
 core_enterprise_add_plan:
-    path:     /{slug}/add/plans
+    path:     /{slug}/add/plan
     defaults: { _controller: "CoreBundle:Enterprise:addPlan" }
+    methods:  POST
+
+core_enterprise_add_intervention:
+    path:     /{slug}/add/intervention
+    defaults: { _controller: "CoreBundle:Enterprise:addIntervention" }
     methods:  POST

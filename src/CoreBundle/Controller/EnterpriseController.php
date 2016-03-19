@@ -2,7 +2,9 @@
 
 namespace CoreBundle\Controller;
 
+use CoreBundle\Entity\Intervention;
 use CoreBundle\Entity\Plan;
+use CoreBundle\Form\Type\InterventionType;
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Enterprise;
 use CoreBundle\Form\Type\EnterpriseType;
@@ -65,6 +67,7 @@ class EnterpriseController extends CoreController
         return $this->render('CoreBundle:Enterprise:show.html.twig', [
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
+            'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
             'delete_form' => $deleteForm->createView(),
             'current_plans' => $currentPlans,
         ]);
@@ -86,6 +89,8 @@ class EnterpriseController extends CoreController
             'plans' => $plans,
         ]);
     }
+
+    // TODO add show intervention
 
     /**
      * Displays a form to edit an existing Enterprise entity.
@@ -152,7 +157,33 @@ class EnterpriseController extends CoreController
             $em->persist($plan);
             $em->flush();
 
+            // TODO handle intervention
+
             $this->addSuccess("core.success.plan.add");
+        }
+
+        return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
+    }
+
+    /**
+     * Add Intervention entity to an Forfait entity
+     *
+     * @param Request $request
+     * @param Enterprise $enterprise
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addIntervention(Request $request, Enterprise $enterprise)
+    {
+        $intervention = new Intervention();
+        $form = $this->createInterventionForm($enterprise, $intervention);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getEm();
+            $em->persist($intervention);
+            $em->flush();
+
+            $this->addSuccess("core.success.intervention.add");
         }
 
         return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
@@ -191,9 +222,27 @@ class EnterpriseController extends CoreController
 
         return $this->createForm(PlanType::class, $plan, [
             'action' => $this->generateUrl('core_enterprise_add_plan', ['slug' => $enterprise->getSlug()])
-        ])
-        ;
+        ]);
     }
+
+    /**
+     * Creates a form to add Intervention to an Enterprise entity.
+     *
+     * @param Enterprise $enterprise The Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createInterventionForm(Enterprise $enterprise, Intervention $intervention = null)
+    {
+        if (is_null($intervention)) {
+            $intervention = new Intervention();
+        }
+
+        return $this->createForm(InterventionType::class, $intervention, [
+            'action' => $this->generateUrl('core_enterprise_add_intervention', ['slug' => $enterprise->getSlug()])
+        ]);
+    }
+
 
     protected function getRepositoryName()
     {
