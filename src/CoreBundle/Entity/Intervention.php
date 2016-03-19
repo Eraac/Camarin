@@ -48,6 +48,30 @@ class Intervention
      */
     private $description;
 
+    /**
+     * @var Plan
+     *
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Plan")
+     * @Assert\Valid
+     */
+    private $plan;
+
+    /**
+     * @var Intervention
+     *
+     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Intervention", mappedBy="parent")
+     * @Assert\Valid
+     */
+    private $child;
+
+    /**
+     * @var Intervention
+     *
+     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Intervention", inversedBy="child")
+     * @Assert\Valid
+     */
+    private $parent;
+
 
     /**
      * Get id
@@ -104,6 +128,10 @@ class Intervention
      */
     public function getDate()
     {
+        if (!is_null($this->parent)) {
+            return $this->parent->getDate();
+        }
+
         return $this->date;
     }
 
@@ -128,7 +156,84 @@ class Intervention
      */
     public function getDescription()
     {
+        if (!is_null($this->parent)) {
+            return $this->parent->getDescription();
+        }
+
         return $this->description;
     }
-}
 
+    /**
+     * Set plan
+     *
+     * @param \CoreBundle\Entity\Plan $plan
+     *
+     * @return Intervention
+     */
+    public function setPlan(\CoreBundle\Entity\Plan $plan = null)
+    {
+        $this->plan = $plan;
+
+        return $this;
+    }
+
+    /**
+     * Get plan
+     *
+     * @return \CoreBundle\Entity\Plan
+     */
+    public function getPlan()
+    {
+        return $this->plan;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \CoreBundle\Entity\Intervention $parent
+     *
+     * @return Intervention
+     */
+    public function setParent(\CoreBundle\Entity\Intervention $parent = null)
+    {
+        $parent->setChild($this);
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \CoreBundle\Entity\Intervention
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set child
+     *
+     * @param \CoreBundle\Entity\Intervention $child
+     *
+     * @return Intervention
+     */
+    public function setChild(\CoreBundle\Entity\Intervention $child = null)
+    {
+        $child->setParent($this);
+        $this->child = $child;
+
+        return $this;
+    }
+
+    /**
+     * Get child
+     *
+     * @return \CoreBundle\Entity\Intervention
+     */
+    public function getChild()
+    {
+        return $this->child;
+    }
+}
