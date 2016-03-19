@@ -51,7 +51,8 @@ class Intervention
     /**
      * @var Plan
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Plan")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Plan", inversedBy="interventions")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Valid
      */
     private $plan;
@@ -68,6 +69,7 @@ class Intervention
      * @var Intervention
      *
      * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Intervention", inversedBy="child")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Valid
      */
     private $parent;
@@ -201,7 +203,6 @@ class Intervention
      */
     public function setParent(\CoreBundle\Entity\Intervention $parent = null)
     {
-        $parent->setChild($this);
         $this->parent = $parent;
 
         return $this;
@@ -226,7 +227,6 @@ class Intervention
      */
     public function setChild(\CoreBundle\Entity\Intervention $child = null)
     {
-        $child->setParent($this);
         $this->child = $child;
 
         return $this;
@@ -240,5 +240,16 @@ class Intervention
     public function getChild()
     {
         return $this->child;
+    }
+
+    public function getSeconds()
+    {
+        $seconds = $this->time->getTimestamp() + $this->time->getOffset();
+
+        if ($this->getChild()) {
+            $seconds += $this->getChild()->getSeconds();
+        }
+
+        return $seconds;
     }
 }

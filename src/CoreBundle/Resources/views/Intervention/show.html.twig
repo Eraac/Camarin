@@ -1,48 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'CoreBundle:Intervention:layout.html.twig' %}
 
-{% block body %}
-    <h1>Intervention</h1>
+{%- block actions -%}
+    <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ 'core.edit'|trans }}</a>
+    {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    {# TODO link to enterprise #}
+    {# TODO link to forfait #}
+    {{ parent() }}
+{%- endblock -%}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ intervention.id }}</td>
-            </tr>
-            <tr>
-                <th>Time</th>
-                <td>{% if intervention.time %}{{ intervention.time|date('H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{% if intervention.date %}{{ intervention.date|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ intervention.description }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{% if intervention.createdAt %}{{ intervention.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Updatedat</th>
-                <td>{% if intervention.updatedAt %}{{ intervention.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body_content %}
 
-    <ul>
-        <li>
-            <a href="{{ path('intervention_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('intervention_edit', { 'id': intervention.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="col s4">
+        <div class="card-panel">
+
+            <div class="row">
+                <div class="col s5">
+                    <strong>{{ "core.intervention.time"|trans }}</strong> : {{ intervention|time }}
+                </div>
+
+                <div class="col s7">
+                    <strong>{{ "core.intervention.date"|trans }}</strong> : {{ intervention.date|date('d-m-Y') }}
+                </div>
+            </div>
+
+            <strong>{{ "core.intervention.description"|trans }}</strong> :
+            <p>{{ intervention.description }}</p>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
 {% endblock %}

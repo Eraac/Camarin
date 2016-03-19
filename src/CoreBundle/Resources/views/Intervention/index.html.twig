@@ -15,7 +15,7 @@
             <tbody>
             {% for intervention in interventions %}
                 <tr>
-                    <td>{{ intervention.time|date('G\\hi') }}</td>
+                    <td>{{ intervention|time }}</td>
                     <td>{{ intervention.date|date('d-m-Y') }}</td>
                     <td>{{ intervention.description }}</td>
                     <td>

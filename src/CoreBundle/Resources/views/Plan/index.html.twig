@@ -21,7 +21,7 @@
                     <td><a href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a></td>
                     <td>{{ plan.time|date('G\\hi') }}</td>
                     <td class="{{ color }}">{{ plan.expireAt|date('d-m-Y') }}</td>
-                    <td>0 {# TODO time_left #}</td>
+                    <td>{{ plan|time_left }}</td>
                     <td>{{ plan.description }}</td>
                     <td>
                         <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': plan.id }) }}">{{ "core.show"|trans }}</a>

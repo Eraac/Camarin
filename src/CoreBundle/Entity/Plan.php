@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use CoreBundle\Interfaces\TimetableInterface;
 
 /**
  * Plan
@@ -12,7 +13,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="plan")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\PlanRepository")
  */
-class Plan
+class Plan implements TimetableInterface
 {
     use TimestampableEntity;
 
@@ -57,10 +58,18 @@ class Plan
      */
     private $enterprise;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection()
+     *
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Intervention", mappedBy="plan")
+     */
+    private $interventions;
+
 
     public function __construct()
     {
         $this->expireAt = new \DateTime('now + 1 year');
+        $this->interventions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -174,5 +183,53 @@ class Plan
         $now = new \DateTime();
 
         return $now->getTimestamp() > $this->expireAt->getTimestamp();
+    }
+
+    /**
+     * Add intervention
+     *
+     * @param \CoreBundle\Entity\Intervention $intervention
+     *
+     * @return Plan
+     */
+    public function addIntervention(\CoreBundle\Entity\Intervention $intervention)
+    {
+        $this->interventions[] = $intervention;
+
+        return $this;
+    }
+
+    /**
+     * Remove intervention
+     *
+     * @param \CoreBundle\Entity\Intervention $intervention
+     */
+    public function removeIntervention(\CoreBundle\Entity\Intervention $intervention)
+    {
+        $this->interventions->removeElement($intervention);
+    }
+
+    /**
+     * Get interventions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInterventions()
+    {
+        return $this->interventions;
+    }
+
+    public function getTimeLeft()
+    {
+        // TODO optimize ?
+        $seconds = -$this->time->getOffset();
+
+        foreach ($this->interventions as $intervention) {
+            $seconds += $intervention->getTime()->getTimestamp() + $intervention->getTime()->getOffset();
+        }
+
+        $seconds = $this->time->getTimestamp() - $seconds;
+
+        return $seconds;
     }
 }

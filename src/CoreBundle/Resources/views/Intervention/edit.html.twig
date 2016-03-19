@@ -1,21 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'CoreBundle:Intervention:layout.html.twig' %}
 
-{% block body %}
-    <h1>Intervention edit</h1>
+{%- block actions -%}
+    <a class="waves-effect waves-light btn" href="{{ path('core_intervention_show', { 'id': intervention.id }) }}">{{ 'core.show'|trans }}</a>
+    {# TODO link to enterprise #}
+    {# TODO link to forfait #}
+    {{ parent() }}
+{%- endblock -%}
 
-    {{ form_start(edit_form) }}
+{% block body_content %}
+    <div class="col s6 offset-s3">
+        {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('intervention_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
+        {{ form_end(edit_form) }}
+
+        {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
 {% endblock %}

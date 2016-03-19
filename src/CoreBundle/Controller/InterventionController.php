@@ -20,7 +20,7 @@ class InterventionController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $interventions = $em->getRepository('CoreBundle:Intervention')->findAll();
+        $interventions = $em->getRepository('CoreBundle:Intervention')->findAllParent();
 
         return $this->render('CoreBundle:Intervention:index.html.twig', [
             'interventions' => $interventions,

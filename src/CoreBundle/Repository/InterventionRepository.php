@@ -10,4 +10,13 @@ namespace CoreBundle\Repository;
  */
 class InterventionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllParent()
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.child', 'c')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL');
+
+        return $qb->getQuery()->getResult();
+    }
 }

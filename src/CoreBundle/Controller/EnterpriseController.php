@@ -157,7 +157,7 @@ class EnterpriseController extends CoreController
             $em->persist($plan);
             $em->flush();
 
-            // TODO handle intervention
+            // TODO handle intervention with no plan
 
             $this->addSuccess("core.success.plan.add");
         }
@@ -172,16 +172,14 @@ class EnterpriseController extends CoreController
      * @param Enterprise $enterprise
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addIntervention(Request $request, Enterprise $enterprise)
+    public function addInterventionAction(Request $request, Enterprise $enterprise)
     {
         $intervention = new Intervention();
         $form = $this->createInterventionForm($enterprise, $intervention);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getEm();
-            $em->persist($intervention);
-            $em->flush();
+            $this->get('core.handle.intervention')->persistIntervention($enterprise, $intervention);
 
             $this->addSuccess("core.success.intervention.add");
         }

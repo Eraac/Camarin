@@ -25,12 +25,18 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
     public function findCurrentPlans(Enterprise $enterprise)
     {
         $qb = $this->createQueryBuilder('p')
-                    ->where('p.enterprise = :enterprise')
-                    ->andWhere('p.expireAt > :now')
+                    ->leftJoin('p.interventions', 'inter')
+                    ->addSelect('inter')
+                    ->where('p.expireAt > :now')
+                    ->andWhere('p.enterprise = :enterprise')
                     ->setParameters([
-                        'enterprise' => $enterprise,
-                        'now' => new \DateTime()
-                    ]);
+                        'now' => new \DateTime(),
+                        'enterprise' => $enterprise
+                    ])
+                    ->andWhere('(TIME_TO_SEC(p.time) > (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                                OR
+                                (SELECT COUNT(i2.id) FROM CoreBundle:Intervention i2 WHERE i2.plan = p) = 0)') // because IS NULL doesn't work
+                    ->orderBy('p.expireAt', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
@@ -41,6 +47,25 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
                     ->where('p.enterprise = :enterprise')
                     ->orderBy('p.createdAt', 'DESC')
                     ->setParameter('enterprise', $enterprise);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function nextExpiredAndAvailablePlan(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('p')
+                    ->leftJoin('p.interventions', 'inter')
+                    ->addSelect('inter')
+                    ->where('p.expireAt > :now')
+                    ->andWhere('p.enterprise = :enterprise')
+                    ->setParameters([
+                        'now' => new \DateTime(),
+                        'enterprise' => $enterprise
+                    ])
+                    ->andWhere('(TIME_TO_SEC(p.time) > (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                                OR
+                                (SELECT COUNT(i2.id) FROM CoreBundle:Intervention i2 WHERE i2.plan = p) = 0)') // because IS NULL doesn't work
+                    ->orderBy('p.expireAt', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

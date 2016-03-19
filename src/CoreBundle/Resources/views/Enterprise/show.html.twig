@@ -36,7 +36,7 @@
                     <li class="collection-item">
                         <div>
                             <div>
-                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan.time|date('G\\hi') }}
+                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan|time_left }} / {{ plan.time|date('G\\hi') }}
                                 <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d-m-Y') }}</span>
                             </div>
 
