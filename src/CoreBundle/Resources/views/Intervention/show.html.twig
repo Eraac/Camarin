@@ -3,8 +3,12 @@
 {%- block actions -%}
     <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
-    {# TODO link to enterprise #}
-    {# TODO link to forfait #}
+    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': intervention.enterprise.slug }) }}">{{ intervention.enterprise.name }}</a>
+
+    {% if intervention.plan %}
+        <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': intervention.plan.id }) }}">{{ 'core.intervention.see.plan'|trans }}</a>
+    {% endif %}
+
     {{ parent() }}
 {%- endblock -%}
 

@@ -58,6 +58,8 @@ core:
         description: "Description"
         dropdown: "Intervention"
         enterprise: "Entreprise"
+        see:
+            plan: "Voir le forfait"
     success:
         enterprise:
             add: "Entreprise ajoutée"

@@ -19,7 +19,7 @@
                 <div class="col s5">
                     <strong>{{ "core.plan.enterprise"|trans }}</strong> : {{ plan.enterprise.name }} <br>
                     <strong>{{ "core.plan.time"|trans }}</strong> : {{ plan.time|date('G\\hi') }} <br>
-                    <strong>{{ "core.plan.time_left"|trans }}</strong> : 0 {# TODO time_left #}
+                    <strong>{{ "core.plan.time_left"|trans }}</strong> : {{ plan|time_left }}
                 </div>
 
                 <div class="col s7">

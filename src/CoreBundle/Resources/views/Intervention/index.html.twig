@@ -16,7 +16,7 @@
             <tbody>
             {% for intervention in interventions %}
                 <tr>
-                    <td>{# TODO add enterprise name #}</td>
+                    <td><a href="{{ url('core_enterprise_show', {'slug': intervention.enterprise.slug}) }}">{{ intervention.enterprise.name }}</a></td>
                     <td>{{ intervention|time }}</td>
                     <td>{{ intervention.date|date('d-m-Y') }}</td>
                     <td>{{ intervention.description }}</td>
