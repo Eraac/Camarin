@@ -17,7 +17,7 @@ class EnterpriseType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'core.form.enterprise.name'])
-            ->add('contact', TextType::class, ['label' => 'core.form.enterprise.contact'])
+            ->add('contact', TextType::class, ['label' => 'core.form.enterprise.contact', 'required' => false])
         ;
     }
     
