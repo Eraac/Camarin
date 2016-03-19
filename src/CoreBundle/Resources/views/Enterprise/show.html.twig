@@ -9,7 +9,7 @@
 
     <ul id="menuPlan" class='dropdown-content'>
         <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.add"|trans }}</a></li>
-        <li><a href="#!">{{ "core.plan.see"|trans }}</a></li> {# TODO #}
+        <li><a href="#">{{ "core.plan.see"|trans }}</a></li> {# TODO see plan #}
     </ul>
 
     <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
@@ -21,7 +21,7 @@
 
     <div class="col s5">
         <div class="card-panel">
-            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO #}
+            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO time_left #}
         </div>
 
         <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
@@ -32,11 +32,11 @@
                         <div>
                             <div>
                                 <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan.time|date('H\\hi') }}
-                                <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d/m/Y') }}</span>
+                                <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d-m-Y') }}</span>
                             </div>
 
                             {{ plan.description }}
-                            <a href="#!" class="secondary-content"><i class="material-icons">mode edit</i></a> {# TODO link edit #}
+                            <a href="{{ url("core_plan_edit", {'id': plan.id}) }}" class="secondary-content"><i class="material-icons">mode edit</i></a>
                         </div>
                     </li>
                 {% endfor %}
@@ -55,7 +55,7 @@
                 {{ form_row(add_plan_form.time, {'size': 's5'}) }}
                 {{ form_row(add_plan_form.expireAt, {'size': 's7'}) }}
                 {{ form_row(add_plan_form.description) }}
-                {% include 'CoreBundle:Form:button/new.html.twig' %}
+                {% include 'CoreBundle:Template:form/button/new.html.twig' %}
             {{ form_end(add_plan_form) }}
         </div>
 

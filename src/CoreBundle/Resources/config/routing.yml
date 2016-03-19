@@ -2,6 +2,10 @@ core_enterprise:
     resource: "@CoreBundle/Resources/config/routing/enterprise.yml"
     prefix:   /enterprise
 
+core_plan:
+    resource: "@CoreBundle/Resources/config/routing/plan.yml"
+    prefix:   /plan
+
 core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:Index:index }

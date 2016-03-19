@@ -1,7 +1,7 @@
 {% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ 'core.show'|trans }}</a>
+    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.name }}</a>
     {{ parent() }}
 {%- endblock -%}
 
@@ -10,7 +10,7 @@
         {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
 
-            {% include 'CoreBundle:Form:button/edit.html.twig' %}
+            {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
         {{ form_end(edit_form) }}
 
         {% include 'CoreBundle:Template:confirm_delete.html.twig' %}

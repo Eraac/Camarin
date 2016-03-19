@@ -5,8 +5,10 @@ core:
             login: "Se connecter"
             logout: "Déconnexion"
         enterprise: "Entreprise"
+        plan: "Forfait"
     title:
         enterprise: "Entreprise"
+        plan: "Forfait"
     form:
         button:
             new: "Ajouter"
@@ -16,10 +18,12 @@ core:
     edit: "Modifier"
     show: "Voir"
     close: "Fermer"
+    action: "Actions"
     confirm:
         delete: "Confirmation de la suppression"
         add_plan: "Ajouter un forfait"
     enterprise:
+        see: "Voir l'entreprise"
         add: "Ajouter une entreprise"
         name: "Nom"
         contact: "Contact"
@@ -28,11 +32,18 @@ core:
         expire_at: "Expire le"
         current_plan: "Forfait en cours"
         no_plan: "Aucun forfait en cours"
-        action: "Actions"
+        unknown: "Inconnu"
     plan:
         dropdown: "Forfait"
         add: "ajouter"
         see: "voir"
+        enterprise: "Entreprise"
+        time: "Temps"
+        expireAt: "Date d'expiration"
+        time_left: "Temps restant"
+        description: "Description"
+        createdAt: "Créé le"
+        updatedAt: "Mise à jour le"
     success:
         enterprise:
             add: "Entreprise ajoutée"
@@ -43,3 +54,5 @@ core:
             time: "Temps"
             expireAt: "Date d'expiration"
             description: "Description"
+            edit: "Forfait modifié"
+            delete: "Forfait supprimé"
