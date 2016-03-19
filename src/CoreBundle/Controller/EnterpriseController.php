@@ -4,7 +4,6 @@ namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Plan;
 use Symfony\Component\HttpFoundation\Request;
-
 use CoreBundle\Entity\Enterprise;
 use CoreBundle\Form\Type\EnterpriseType;
 use CoreBundle\Form\Type\PlanType;
