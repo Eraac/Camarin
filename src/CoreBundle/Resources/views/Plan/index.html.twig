@@ -19,10 +19,11 @@
             </thead>
             <tbody>
             {% for plan in plans %}
+                {% set color = (plan.isExpired) ? 'red-text' : 'green-text' %}
                 <tr>
                     <td><a href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a></td>
                     <td>{{ plan.time|date('G\\hi') }}</td>
-                    <td>{{ plan.expireAt|date('d-m-Y') }}</td>
+                    <td class="{{ color }}">{{ plan.expireAt|date('d-m-Y') }}</td>
                     <td>0 {# TODO time_left #}</td>
                     <td>{{ plan.description }}</td>
                     <td>
