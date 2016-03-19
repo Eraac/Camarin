@@ -152,7 +152,7 @@ class EnterpriseController extends CoreController
             $em->persist($plan);
             $em->flush();
 
-            $this->addSuccess("core.success.enterprise.add_plan");
+            $this->addSuccess("core.success.plan.add");
         }
 
         return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);

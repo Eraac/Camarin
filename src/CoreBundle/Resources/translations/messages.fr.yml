@@ -51,10 +51,11 @@ core:
             add: "Entreprise ajoutée"
             edit: "Entreprise modifiée"
             delete: "Entreprise supprimée"
-            add_plan: "Forfait ajouté"
         plan:
-            time: "Temps"
-            expireAt: "Date d'expiration"
-            description: "Description"
+            add: "Forfait ajouté"
             edit: "Forfait modifié"
             delete: "Forfait supprimé"
+        intervention:
+            add: "Intervention ajoutée"
+            edit: "Intervention modifiée"
+            delete: "Intervention supprimée"
