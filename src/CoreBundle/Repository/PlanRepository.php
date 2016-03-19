@@ -34,4 +34,14 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('p')
+                    ->where('p.enterprise = :enterprise')
+                    ->orderBy('p.createdAt', 'DESC')
+                    ->setParameter('enterprise', $enterprise);
+
+        return $qb->getQuery()->getResult();
+    }
 }

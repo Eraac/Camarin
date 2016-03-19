@@ -34,9 +34,11 @@ core:
         no_plan: "Aucun forfait en cours"
         unknown: "Inconnu"
     plan:
-        dropdown: "Forfait"
-        add: "ajouter"
-        see: "voir"
+        dropdown:
+            title: "Forfait"
+            add: "ajouter"
+            see: "voir"
+        add: "Ajouter un forfait"
         enterprise: "Entreprise"
         time: "Temps"
         expireAt: "Date d'expiration"

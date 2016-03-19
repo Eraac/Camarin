@@ -71,6 +71,23 @@ class EnterpriseController extends CoreController
     }
 
     /**
+     * Find and displays Plan entities of an Enterprise entity
+     *
+     * @param Enterprise $enterprise
+     */
+    public function showPlanAction(Enterprise $enterprise)
+    {
+        $plans = $this->getRepository('CoreBundle:Plan')->findByEnterprise($enterprise);
+        // TODO add pagination
+
+        return $this->render('CoreBundle:Enterprise:plan.html.twig', [
+            'enterprise' => $enterprise,
+            'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
+            'plans' => $plans,
+        ]);
+    }
+
+    /**
      * Displays a form to edit an existing Enterprise entity.
      *
      */

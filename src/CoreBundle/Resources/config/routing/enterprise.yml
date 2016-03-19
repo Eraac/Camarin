@@ -8,6 +8,11 @@ core_enterprise_show:
     defaults: { _controller: "CoreBundle:Enterprise:show" }
     methods:  GET
 
+core_enterprise_show_plans:
+    path:      /{slug}/plans
+    defaults:  { _controller: "CoreBundle:Enterprise:showPlan" }
+    methods:   GET
+
 core_enterprise_new:
     path:     /new
     defaults: { _controller: "CoreBundle:Enterprise:new" }

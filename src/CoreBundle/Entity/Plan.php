@@ -168,4 +168,11 @@ class Plan
     {
         return $this->enterprise;
     }
+
+    public function isExpired()
+    {
+        $now = new \DateTime();
+
+        return $now->getTimestamp() > $this->expireAt->getTimestamp();
+    }
 }

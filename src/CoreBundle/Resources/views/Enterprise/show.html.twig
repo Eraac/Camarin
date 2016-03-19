@@ -5,11 +5,11 @@
 {%- endblock -%}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown"|trans }}</a>
+    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
 
     <ul id="menuPlan" class='dropdown-content'>
-        <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.add"|trans }}</a></li>
-        <li><a href="#">{{ "core.plan.see"|trans }}</a></li> {# TODO see plan #}
+        <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.dropdown.add"|trans }}</a></li>
+        <li><a href="{{ url('core_enterprise_show_plans', {'slug': enterprise.slug}) }}">{{ "core.plan.dropdown.see"|trans }}</a></li>
     </ul>
 
     <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
@@ -31,7 +31,7 @@
                     <li class="collection-item">
                         <div>
                             <div>
-                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan.time|date('H\\hi') }}
+                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan.time|date('G\\hi') }}
                                 <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d-m-Y') }}</span>
                             </div>
 
@@ -46,23 +46,7 @@
         {% endif %}
     </div>
 
-    <!-- Modal Structure -->
-    <div id="addPlan" class="modal">
-        <div class="modal-content">
-            <h4>{{ "core.confirm.add_plan"|trans }}</h4>
-
-            {{ form_start(add_plan_form) }}
-                {{ form_row(add_plan_form.time, {'size': 's5'}) }}
-                {{ form_row(add_plan_form.expireAt, {'size': 's7'}) }}
-                {{ form_row(add_plan_form.description) }}
-                {% include 'CoreBundle:Template:form/button/new.html.twig' %}
-            {{ form_end(add_plan_form) }}
-        </div>
-
-        <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
-        </div>
-    </div>
+    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
 
 {% endblock %}
 
