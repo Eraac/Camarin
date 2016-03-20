@@ -92,7 +92,7 @@ class InterventionController extends CoreController
             $this->addSuccess('core.success.intervention.delete');
         }
 
-        return $this->redirectToRoute('intervention_index');
+        return $this->redirectToRoute('core_intervention_index');
     }
 
     /**
