@@ -48,11 +48,21 @@ class CoreExtension extends \Twig_Extension
 
     private function secondsToString($seconds)
     {
+        $isNegative = ($seconds < 0);
+
+        if ($isNegative) {
+            $seconds *= -1;
+        }
+
         $hours = floor($seconds / 3600);
         $minutes = ($seconds % 3600) / 60;
 
         if ($minutes == 0) {
             $minutes = "00";
+        }
+
+        if ($isNegative) {
+            $hours = '-' . $hours;
         }
 
         return $hours . "h" . $minutes;
