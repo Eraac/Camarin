@@ -1,0 +1,9 @@
+{% extends 'CoreBundle:Plan:layout.html.twig' %}
+
+{% block body %}
+
+    <div class="col s12">
+        {% include 'CoreBundle:Template:list_plans.html.twig' with {'with_enterprise': true} %}
+    </div>
+
+{% endblock %}

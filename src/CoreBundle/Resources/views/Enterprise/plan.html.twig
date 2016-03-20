@@ -1,0 +1,26 @@
+{% extends 'CoreBundle:Plan:layout.html.twig' %}
+
+{% block actions %}
+    <a class="modal-trigger waves-effect waves-light btn green" href="#addPlan">{{ "core.plan.add"|trans }}</a>
+    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
+{% endblock %}
+
+{% block body_content %}
+
+    <div class="col s12">
+        {% include 'CoreBundle:Template:list_plans.html.twig' %}
+    </div>
+
+    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

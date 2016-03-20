@@ -1,0 +1,9 @@
+{% extends 'CoreBundle:Template:form/button/base.html.twig' %}
+
+{%- block value -%}
+    {{ "core.form.button.new"|trans }}
+{%- endblock -%}
+
+{%- block color -%}
+    {{ color is defined ? color : '' }}
+{%- endblock -%}

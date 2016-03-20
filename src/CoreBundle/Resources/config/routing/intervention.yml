@@ -1,0 +1,19 @@
+core_intervention_index:
+    path:     /
+    defaults: { _controller: "CoreBundle:Intervention:index" }
+    methods:  GET
+
+core_intervention_show:
+    path:     /{id}/show
+    defaults: { _controller: "CoreBundle:Intervention:show" }
+    methods:  GET
+
+core_intervention_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CoreBundle:Intervention:edit" }
+    methods:  [GET, POST]
+
+core_intervention_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CoreBundle:Intervention:delete" }
+    methods:  DELETE

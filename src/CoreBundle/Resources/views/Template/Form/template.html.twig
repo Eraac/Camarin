@@ -1,0 +1,191 @@
+{# Widgets #}
+
+{%- block file_widget -%}
+    <div class="btn">
+        <span>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</span>
+        {{ form_widget(form) }}
+    </div>
+{%- endblock -%}
+
+{%- block textarea_widget -%}
+    <textarea class="materialize-textarea" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{%- endblock textarea_widget -%}
+
+{%- block datetime_widget -%}
+    <div>
+        <div class="col s12 m12 l6">
+            {{- form_widget(form.date) -}}
+        </div>
+        <div class="col s12 m12 l6">
+            {{- form_widget(form.time) -}}
+        </div>
+    </div>
+{%- endblock datetime_widget -%}
+
+{%- block date_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.day) }}
+        </div>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.month) }}
+        </div>
+        <div class="col s4 m4 l4">
+            {{ form_widget(form.year) }}
+        </div>
+    </div>
+{%- endblock date_widget -%}
+
+{%- block time_widget -%}
+    {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+    {% set sizeML = (with_minutes and with_seconds) ? 4 : (with_minutes) ? 6 : 12 %}
+    {% set sizeS = (with_minutes and with_seconds) ? 12 : (with_minutes) ? 6 : 12 %}
+    {% set class = "col s" ~ sizeS ~ " m" ~ sizeML ~ " l" ~ sizeML %}
+
+    <div {{ block('widget_container_attributes') }}>
+        <div class="{{ class }}">
+            {{ form_widget(form.hour, vars) }}
+        </div>
+        {% if with_minutes %}
+            <div class="{{ class }}">
+                {{ form_widget(form.minute, vars) }}
+            </div>
+        {% endif %}
+        {% if with_seconds %}
+            <div class="{{ class }}">
+                {{ form_widget(form.second, vars) }}
+            </div>
+        {% endif %}
+    </div>
+{%- endblock time_widget -%}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    {% if type == "submit" %}
+        {% set attr = attr|merge({'class': 'btn waves-effect waves-light right'}) %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        <i class="material-icons right">send</i>
+    </button>
+{%- endblock button_widget -%}
+
+{%- block submit_widget -%}
+    {%- set type = type|default('submit') -%}
+    {{ block('button_widget') }}
+{%- endblock submit_widget -%}
+
+{# Labels #}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+            {%- if required -%}
+            <span class="red-text">*</span>
+            {%- endif -%}
+        </label>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block file_label -%}
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+    </div>
+{%- endblock -%}
+
+{# Rows #}
+
+{%- block form_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="input-field col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_label(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block datetime_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block date_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block time_row -%}
+    {% set size = size|default('s12 m12 l12') %}
+    <div class="col {{ size }}">
+        {{- form_errors(form) -}}
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock -%}
+
+{%- block file_row -%}
+    <div class="file-field">
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_label(form) -}}
+    </div>
+{%- endblock -%}
+
+{# Misc #}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul>
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block button_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock button_attributes -%}

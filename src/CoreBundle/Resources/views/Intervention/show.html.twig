@@ -1,0 +1,45 @@
+{% extends 'CoreBundle:Intervention:layout.html.twig' %}
+
+{%- block actions -%}
+    <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ 'core.edit'|trans }}</a>
+    {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': intervention.enterprise.slug }) }}">{{ intervention.enterprise.name }}</a>
+
+    {% if intervention.plan %}
+        <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': intervention.plan.id }) }}">{{ 'core.intervention.see.plan'|trans }}</a>
+    {% endif %}
+
+    {{ parent() }}
+{%- endblock -%}
+
+{% block body_content %}
+
+    <div class="col s4">
+        <div class="card-panel">
+
+            <div class="row">
+                <div class="col s5">
+                    <strong>{{ "core.intervention.time"|trans }}</strong> : {{ intervention|time }}
+                </div>
+
+                <div class="col s7">
+                    <strong>{{ "core.intervention.date"|trans }}</strong> : {{ intervention.date|date('d-m-Y') }}
+                </div>
+            </div>
+
+            <strong>{{ "core.intervention.description"|trans }}</strong> :
+            <p>{{ intervention.description }}</p>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
+{% endblock %}
