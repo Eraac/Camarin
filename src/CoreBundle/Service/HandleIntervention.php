@@ -16,6 +16,20 @@ class HandleIntervention
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @param Intervention $intervention
+     * @return Intervention
+     */
+    public function getFirstParent(Intervention $intervention)
+    {
+        while(($parent = $intervention->getParent()) !== null) {
+            dump($intervention);
+            $intervention = $parent;
+        }
+
+        return $intervention;
+    }
+
     public function persistIntervention(Enterprise $enterprise, Intervention $intervention)
     {
         $plan = $this->getNextExpiredAndAvailablePlan($enterprise);

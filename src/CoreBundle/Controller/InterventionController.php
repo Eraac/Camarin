@@ -38,7 +38,7 @@ class InterventionController extends CoreController
     {
         $deleteForm = $this->createDeleteForm($intervention);
 
-        // TODO redirect to parent
+        $intervention = $this->get('core.handle.intervention')->getFirstParent($intervention);
 
         return $this->render('CoreBundle:Intervention:show.html.twig', [
             'intervention' => $intervention,
@@ -56,7 +56,7 @@ class InterventionController extends CoreController
         $editForm = $this->createForm(InterventionType::class, $intervention);
         $editForm->handleRequest($request);
 
-        // TODO redirect to parent
+        $intervention = $this->get('core.handle.intervention')->getFirstParent($intervention);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
