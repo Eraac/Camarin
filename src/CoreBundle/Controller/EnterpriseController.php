@@ -170,11 +170,7 @@ class EnterpriseController extends CoreController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getEm();
-            $em->persist($plan);
-            $em->flush();
-
-            // TODO handle intervention with no plan
+            $this->get('core.handle.plan')->persistPlan($enterprise, $plan);
 
             $this->addSuccess("core.success.plan.add");
         }
@@ -232,8 +228,6 @@ class EnterpriseController extends CoreController
         if (is_null($plan)) {
             $plan = new Plan();
         }
-
-        $plan->setEnterprise($enterprise);
 
         return $this->createForm(PlanType::class, $plan, [
             'action' => $this->generateUrl('core_enterprise_add_plan', ['slug' => $enterprise->getSlug()])

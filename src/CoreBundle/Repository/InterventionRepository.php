@@ -33,4 +33,15 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getOrphelinIntervention(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->where('i.enterprise = :enterprise')
+                    ->andWhere('i.plan IS NULL')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('i.createdAt', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

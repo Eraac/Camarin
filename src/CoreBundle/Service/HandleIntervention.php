@@ -27,13 +27,10 @@ class HandleIntervention
         }
     }
 
-    private function splitIntervention(Enterprise $enterprise, Plan $plan, Intervention $intervention)
+    public function splitIntervention(Enterprise $enterprise, Plan $plan, Intervention $intervention)
     {
         $maxTime = $plan->getTimeLeft();
         $timeLeft = $intervention->getSeconds() - $maxTime;
-
-        dump($maxTime);
-        dump($timeLeft);
 
         if ($maxTime < $intervention->getSeconds()) {
             $intervention->setTime($this->makeDate($maxTime));
@@ -48,8 +45,6 @@ class HandleIntervention
             $childIntervention->setParent($intervention);
             $childIntervention->setDescription(""); // can not be null
             $childIntervention->setTime($this->makeDate($timeLeft));
-
-            dump($childIntervention);
 
             if (is_null($nextPlan)) {
                 $this->persist($enterprise, $childIntervention, $nextPlan);
