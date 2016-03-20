@@ -48,6 +48,8 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
     public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.child', 'c')
+                    ->addSelect('c')
                     ->where('i.enterprise = :enterprise')
                     ->andWhere('i.parent IS NULL')
                     ->setParameter('enterprise', $enterprise)
