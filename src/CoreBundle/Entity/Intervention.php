@@ -52,7 +52,7 @@ class Intervention
      * @var Plan
      *
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Plan", inversedBy="interventions")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      * @Assert\Valid
      */
     private $plan;
