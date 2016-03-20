@@ -251,11 +251,11 @@ class Intervention
         return $this->child;
     }
 
-    public function getSeconds()
+    public function getSeconds($realTime = false)
     {
         $seconds = $this->time->getTimestamp() + $this->time->getOffset();
 
-        if ($this->getChild()) {
+        if (!$realTime && $this->getChild()) {
             $seconds += $this->getChild()->getSeconds();
         }
 

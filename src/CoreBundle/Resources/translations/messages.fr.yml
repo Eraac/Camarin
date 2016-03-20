@@ -23,6 +23,7 @@ core:
     action: "Actions"
     see: "voir"
     add: "ajouter"
+    info: "Informations"
     confirm:
         delete: "Confirmation de la suppression"
         add_plan: "Ajouter un forfait"
@@ -38,6 +39,7 @@ core:
         current_plan: "Forfait en cours"
         no_plan: "Aucun forfait en cours"
         unknown: "Inconnu"
+        last_interventions: "Dernière interventions"
     plan:
         dropdown:
             title: "Forfait"
@@ -51,6 +53,7 @@ core:
         description: "Description"
         createdAt: "Créé le"
         updatedAt: "Mise à jour le"
+        interventions: "Interventions liées"
     intervention:
         add: "Ajouter une intervention"
         time: "Temps"

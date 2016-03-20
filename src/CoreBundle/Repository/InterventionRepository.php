@@ -44,4 +44,16 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->where('i.enterprise = :enterprise')
+                    ->andWhere('i.parent IS NULL')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('i.date', 'DESC')
+                    ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
 }

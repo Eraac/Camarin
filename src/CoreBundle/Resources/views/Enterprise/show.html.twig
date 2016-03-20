@@ -24,12 +24,19 @@
 
 {% block body_content %}
 
-    <div class="col s5">
+    <div class="col s8">
+        <h4>{{ "core.enterprise.last_interventions"|trans }}</h4>
+        {% include 'CoreBundle:Template:list_interventions.html.twig' with {'interventions': last_interventions} %}
+    </div>
+
+    <div class="col s4">
+
+        <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
+
         <div class="card-panel">
             <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO time_left #}
         </div>
 
-        <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
         {% if current_plans is not empty %}
             <ul class="collection">
                 {% for plan in current_plans %}

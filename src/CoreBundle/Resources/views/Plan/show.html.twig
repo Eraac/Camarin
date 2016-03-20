@@ -9,10 +9,12 @@
 
 {% block body_content %}
     <div class="col s7">
-        {# TODO interventions #}
+        <h4>{{ "core.plan.interventions"|trans }}</h4>
+        {% include 'CoreBundle:Template:list_interventions.html.twig' with {'with_enterprise': false, 'real_time': true} %}
     </div>
 
     <div class="col s5">
+        <h4>{{ "core.info"|trans }}</h4>
         <div class="card-panel">
 
             <div class="row">

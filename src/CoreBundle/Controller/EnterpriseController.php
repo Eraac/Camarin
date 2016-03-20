@@ -16,6 +16,8 @@ use CoreBundle\Form\Type\PlanType;
  */
 class EnterpriseController extends CoreController
 {
+    const NB_LAST_INTERVENTION = 10;
+
     /**
      * Lists all Enterprise entities.
      *
@@ -63,8 +65,7 @@ class EnterpriseController extends CoreController
     {
         $deleteForm = $this->createDeleteForm($enterprise);
         $currentPlans = $this->getRepository('CoreBundle:Plan')->findCurrentPlans($enterprise);
-
-        // TODO list last interventions
+        $lastInterventions = $this->getRepository('CoreBundle:Intervention')->lastInterventionByEnterprise($enterprise, self::NB_LAST_INTERVENTION);
 
         return $this->render('CoreBundle:Enterprise:show.html.twig', [
             'enterprise' => $enterprise,
@@ -72,6 +73,7 @@ class EnterpriseController extends CoreController
             'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
             'delete_form' => $deleteForm->createView(),
             'current_plans' => $currentPlans,
+            'last_interventions' => $lastInterventions,
         ]);
     }
 

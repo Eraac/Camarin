@@ -22,9 +22,9 @@ class CoreExtension extends \Twig_Extension
         return $this->secondsToString($secondLeft);
     }
 
-    public function time(Intervention $intervention)
+    public function time(Intervention $intervention, $realTime = false)
     {
-        $seconds = $intervention->getSeconds();
+        $seconds = $intervention->getSeconds($realTime);
 
         return $this->secondsToString($seconds);
     }

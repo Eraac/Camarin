@@ -35,12 +35,12 @@ class PlanController extends CoreController
     public function showAction(Plan $plan)
     {
         $deleteForm = $this->createDeleteForm($plan);
-
-        // TODO get intervention
+        $interventions = $this->getRepository('CoreBundle:Intervention')->findByPlan($plan);
 
         return $this->render('CoreBundle:Plan:show.html.twig', [
             'plan' => $plan,
             'delete_form' => $deleteForm->createView(),
+            'interventions' => $interventions,
         ]);
     }
 

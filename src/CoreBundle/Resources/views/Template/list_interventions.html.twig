@@ -1,0 +1,32 @@
+{% set with_enterprise = with_enterprise|default(false) %}
+{% set real_time = real_time|default(false) %}
+
+<table class="striped">
+    <thead>
+    <tr>
+        {% if with_enterprise %}
+        <th>{{ "core.intervention.enterprise"|trans }}</th>
+        {% endif %}
+        <th>{{ "core.intervention.time"|trans }}</th>
+        <th>{{ "core.intervention.date"|trans }}</th>
+        <th>{{ "core.intervention.description"|trans }}</th>
+        <th>{{ "core.action"|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for intervention in interventions %}
+        <tr>
+            {% if with_enterprise %}
+            <td><a href="{{ url('core_enterprise_show', {'slug': intervention.enterprise.slug}) }}">{{ intervention.enterprise.name }}</a></td>
+            {% endif %}
+            <td>{{ intervention|time(real_time) }}</td>
+            <td>{{ intervention.date|date('d-m-Y') }}</td>
+            <td>{{ intervention.description }}</td>
+            <td>
+                <a class="waves-effect waves-light btn" href="{{ path('core_intervention_show', { 'id': intervention.id }) }}">{{ "core.show"|trans }}</a>
+                <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ "core.edit"|trans }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
