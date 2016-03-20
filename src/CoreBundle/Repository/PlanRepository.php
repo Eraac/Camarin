@@ -69,4 +69,71 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getSecondsAvailableForEnterprise(Enterprise $enterprise)
+    {
+        $secondsIntervention = $this->getSecondsInterventionForAvailablePlanByEnterprise($enterprise);
+        $secondsPlan = $this->getSecondsForAvailablePlanByEnterprise($enterprise);
+        $secondsOrphan = $this->getSecondsForOrphanInterventionByEnterprise($enterprise);
+
+        return $secondsPlan - $secondsIntervention - $secondsOrphan;
+    }
+
+    private function getSecondsInterventionForAvailablePlanByEnterprise(Enterprise $enterprise)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->_em->createQueryBuilder()
+            ->select('
+                        (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                    ')
+            ->from('CoreBundle:Plan', 'p')
+            ->where('p.expireAt > :now')
+            ->andWhere('p.enterprise = :enterprise')
+            ->setParameters([
+                'now' => $now,
+                'enterprise' => $enterprise
+            ]);
+
+        return $this->array_sum($qb->getQuery()->getScalarResult());
+    }
+
+    private function getSecondsForAvailablePlanByEnterprise(Enterprise $enterprise)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->createQueryBuilder('p')
+            ->select('SUM(TIME_TO_SEC(p.time))')
+            ->where('p.expireAt > :now')
+            ->andWhere('p.enterprise = :enterprise')
+            ->setParameters([
+                'now' => $now,
+                'enterprise' => $enterprise
+            ]);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function getSecondsForOrphanInterventionByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('SUM(TIME_TO_SEC(i.time))')
+            ->from('CoreBundle:Intervention', 'i')
+            ->where('i.enterprise = :enterprise')
+            ->andWhere('i.plan IS NULL')
+            ->setParameter('enterprise', $enterprise);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function array_sum(array $rows)
+    {
+        $sum = 0;
+
+        foreach($rows as $row) {
+            $sum += $row["1"];
+        }
+
+        return $sum;
+    }
 }

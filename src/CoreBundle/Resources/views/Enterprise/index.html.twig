@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ enterprise.name }}</td>
                     <td>{{ enterprise.contact }}</td>
-                    <td>0 {# TODO time_left #}</td>
+                    <td>{{ enterprise|time_enterprise }}</td>
                     <td>
                         <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ "core.show"|trans }}</a>
                         <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ "core.edit"|trans }}</a>

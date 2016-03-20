@@ -34,7 +34,7 @@
         <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
 
         <div class="card-panel">
-            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO time_left #}
+            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : {{ enterprise|time_enterprise }}
         </div>
 
         {% if current_plans is not empty %}
