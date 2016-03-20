@@ -56,4 +56,24 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findOrphan()
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.plan IS NULL')
+            ->orderBy('i.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOrphanByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->where('i.enterprise = :enterprise')
+                    ->andWhere('i.plan IS NULL')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('i.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

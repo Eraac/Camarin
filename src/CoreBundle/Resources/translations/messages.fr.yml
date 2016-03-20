@@ -40,6 +40,8 @@ core:
         no_plan: "Aucun forfait en cours"
         unknown: "Inconnu"
         last_interventions: "Dernière interventions"
+        orphan_interventions: "Interventions non comptabilisées"
+        list_interventions: "Liste des interventions"
     plan:
         dropdown:
             title: "Forfait"

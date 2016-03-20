@@ -19,11 +19,14 @@ class InterventionController extends CoreController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('CoreBundle:Intervention');
 
-        $interventions = $em->getRepository('CoreBundle:Intervention')->findAllParent();
+        $interventions = $repo->findAllParent();
+        $oprhanIntervention = $repo->findOrphan();
 
         return $this->render('CoreBundle:Intervention:index.html.twig', [
             'interventions' => $interventions,
+            'orphan_interventions' => $oprhanIntervention,
         ]);
     }
 

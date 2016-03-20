@@ -101,13 +101,16 @@ class EnterpriseController extends CoreController
      */
     public function showInterventionAction(Enterprise $enterprise)
     {
-        $interventions = $this->getRepository('CoreBundle:Intervention')->findByEnterprise($enterprise);
+        $repo = $this->getRepository('CoreBundle:Intervention');
+        $interventions = $repo->findByEnterprise($enterprise);
+        $orphanInterventions = $repo->findOrphanByEnterprise($enterprise);
         // TODO add pagination
 
         return $this->render('CoreBundle:Enterprise:intervention.html.twig', [
             'enterprise' => $enterprise,
             'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
             'interventions' => $interventions,
+            'orphan_interventions' => $orphanInterventions,
         ]);
     }
 
