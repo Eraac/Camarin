@@ -1,0 +1,44 @@
+core_enterprise_index:
+    path:     /
+    defaults: { _controller: "CoreBundle:Enterprise:index" }
+    methods:  GET
+
+core_enterprise_show:
+    path:     /{slug}/show
+    defaults: { _controller: "CoreBundle:Enterprise:show" }
+    methods:  GET
+
+core_enterprise_show_plans:
+    path:      /{slug}/plans
+    defaults:  { _controller: "CoreBundle:Enterprise:showPlan" }
+    methods:   GET
+
+core_enterprise_show_interventions:
+    path:      /{slug}/interventions
+    defaults:  { _controller: "CoreBundle:Enterprise:showIntervention" }
+    methods:   GET
+
+core_enterprise_new:
+    path:     /new
+    defaults: { _controller: "CoreBundle:Enterprise:new" }
+    methods:  [GET, POST]
+
+core_enterprise_edit:
+    path:     /{slug}/edit
+    defaults: { _controller: "CoreBundle:Enterprise:edit" }
+    methods:  [GET, POST]
+
+core_enterprise_delete:
+    path:     /{slug}/delete
+    defaults: { _controller: "CoreBundle:Enterprise:delete" }
+    methods:  DELETE
+
+core_enterprise_add_plan:
+    path:     /{slug}/add/plan
+    defaults: { _controller: "CoreBundle:Enterprise:addPlan" }
+    methods:  POST
+
+core_enterprise_add_intervention:
+    path:     /{slug}/add/intervention
+    defaults: { _controller: "CoreBundle:Enterprise:addIntervention" }
+    methods:  POST

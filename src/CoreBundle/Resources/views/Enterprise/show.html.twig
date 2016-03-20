@@ -1,0 +1,67 @@
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
+
+{%- block content_title -%}
+    {{ enterprise.name }}
+{%- endblock -%}
+
+{%- block actions -%}
+    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuIntervention'>{{ "core.intervention.dropdown"|trans }}</a>
+    <ul id="menuIntervention" class='dropdown-content'>
+        <li><a class="modal-trigger" href="#addIntervention">{{ "core.add"|trans }}</a></li>
+        <li><a href="{{ url('core_enterprise_show_interventions', {'slug': enterprise.slug}) }}">{{ "core.see"|trans }}</a></li>
+    </ul>
+
+    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
+    <ul id="menuPlan" class='dropdown-content'>
+        <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.dropdown.add"|trans }}</a></li>
+        <li><a href="{{ url('core_enterprise_show_plans', {'slug': enterprise.slug}) }}">{{ "core.plan.dropdown.see"|trans }}</a></li>
+    </ul>
+
+    <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
+    {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    {{ parent() }}
+{%- endblock -%}
+
+{% block body_content %}
+
+    <div class="col s5">
+        <div class="card-panel">
+            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO time_left #}
+        </div>
+
+        <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
+        {% if current_plans is not empty %}
+            <ul class="collection">
+                {% for plan in current_plans %}
+                    <li class="collection-item">
+                        <div>
+                            <div>
+                                <strong>{{ "core.enterprise.time"|trans }}</strong> : {{ plan|time_left }} / {{ plan.time|date('G\\hi') }}
+                                <span class="right"><strong>{{ "core.enterprise.expire_at"|trans }}</strong> : {{ plan.expireAt|date('d-m-Y') }}</span>
+                            </div>
+
+                            {{ plan.description }}
+                            <a href="{{ url("core_plan_edit", {'id': plan.id}) }}" class="secondary-content"><i class="material-icons">mode edit</i></a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ "core.enterprise.no_plan"|trans }}
+        {% endif %}
+    </div>
+
+    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
+    {% include 'CoreBundle:Template:modal_add_intervention.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

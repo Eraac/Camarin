@@ -1,0 +1,48 @@
+{% extends 'CoreBundle:Intervention:layout.html.twig' %}
+
+{% block actions %}
+    <a class="modal-trigger waves-effect waves-light btn green" href="#addIntervention">{{ "core.intervention.add"|trans }}</a>
+    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
+{% endblock %}
+
+{% block body_content %}
+
+    <div class="col s12">
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>{{ "core.intervention.time"|trans }}</th>
+                <th>{{ "core.intervention.date"|trans }}</th>
+                <th>{{ "core.intervention.description"|trans }}</th>
+                <th>{{ "core.action"|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for intervention in interventions %}
+                <tr>
+                    <td>{{ intervention|time }}</td>
+                    <td>{{ intervention.date|date('d-m-Y') }}</td>
+                    <td>{{ intervention.description }}</td>
+                    <td>
+                        <a class="waves-effect waves-light btn" href="{{ path('core_intervention_show', { 'id': intervention.id }) }}">{{ "core.show"|trans }}</a>
+                        <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ "core.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'CoreBundle:Template:modal_add_intervention.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

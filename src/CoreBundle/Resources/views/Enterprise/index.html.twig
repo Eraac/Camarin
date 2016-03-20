@@ -1,0 +1,37 @@
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
+
+{% block actions %}
+    <a class="waves-effect waves-light btn right green" href="{{ path('core_enterprise_new') }}">
+        {{ "core.enterprise.add"|trans }}
+    </a>
+{% endblock %}
+
+{% block body_content %}
+
+    <div class="col s12">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>{{ "core.enterprise.name"|trans }}</th>
+                    <th>{{ "core.enterprise.contact"|trans }}</th>
+                    <th>{{ "core.enterprise.time_left"|trans }}</th>
+                    <th>{{ "core.action"|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for enterprise in enterprises %}
+                <tr>
+                    <td>{{ enterprise.name }}</td>
+                    <td>{{ enterprise.contact }}</td>
+                    <td>0 {# TODO time_left #}</td>
+                    <td>
+                        <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ "core.show"|trans }}</a>
+                        <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ "core.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

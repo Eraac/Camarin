@@ -38,6 +38,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'CoreBundle:Template:Form/template.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -60,6 +62,9 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            datetime_functions:
+                time_to_sec: CoreBundle\DBAL\TimeToSec
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -69,15 +74,14 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-# Assetic Configuration
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
-
 # FOSUser Configuration
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: UserBundle\Entity\User
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+            timestampable: true

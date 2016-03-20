@@ -1,0 +1,75 @@
+core:
+    nav:
+        user:
+            account: "Mon compte"
+            login: "Se connecter"
+            logout: "Déconnexion"
+        enterprise: "Entreprise"
+        plan: "Forfait"
+        intervention: "Intervention"
+    title:
+        enterprise: "Entreprise"
+        plan: "Forfait"
+        intervention: "Intervention"
+    form:
+        button:
+            new: "Ajouter"
+            edit: "Mettre à jour"
+            delete: "Supprimer"
+    back: "Retour à la liste"
+    edit: "Modifier"
+    show: "Voir"
+    close: "Fermer"
+    action: "Actions"
+    see: "voir"
+    add: "ajouter"
+    confirm:
+        delete: "Confirmation de la suppression"
+        add_plan: "Ajouter un forfait"
+        add_intervention: "Ajouter une intervention"
+    enterprise:
+        see: "Voir l'entreprise"
+        add: "Ajouter une entreprise"
+        name: "Nom"
+        contact: "Contact"
+        time_left: "Temps restant"
+        time: "Temps"
+        expire_at: "Expire le"
+        current_plan: "Forfait en cours"
+        no_plan: "Aucun forfait en cours"
+        unknown: "Inconnu"
+    plan:
+        dropdown:
+            title: "Forfait"
+            add: "ajouter"
+            see: "voir"
+        add: "Ajouter un forfait"
+        enterprise: "Entreprise"
+        time: "Temps"
+        expireAt: "Date d'expiration"
+        time_left: "Temps restant"
+        description: "Description"
+        createdAt: "Créé le"
+        updatedAt: "Mise à jour le"
+    intervention:
+        add: "Ajouter une intervention"
+        time: "Temps"
+        date: "Date"
+        description: "Description"
+        dropdown: "Intervention"
+        enterprise: "Entreprise"
+        see:
+            plan: "Voir le forfait"
+    success:
+        enterprise:
+            add: "Entreprise ajoutée"
+            edit: "Entreprise modifiée"
+            delete: "Entreprise supprimée"
+        plan:
+            add: "Forfait ajouté"
+            edit: "Forfait modifié"
+            delete: "Forfait supprimé"
+        intervention:
+            add: "Intervention ajoutée"
+            edit: "Intervention modifiée"
+            delete: "Intervention supprimée"

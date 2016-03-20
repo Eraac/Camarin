@@ -1,0 +1,10 @@
+{% extends 'CoreBundle:Enterprise:layout.html.twig' %}
+
+{% block body_content %}
+    <div class="col s6 offset-s3">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {% include 'CoreBundle:Template:form/button/new.html.twig' with {'color': 'green'} %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

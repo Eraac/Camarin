@@ -1,0 +1,51 @@
+{% extends 'CoreBundle:Plan:layout.html.twig' %}
+
+{% block actions %}
+    <a class="modal-trigger waves-effect waves-light btn green" href="#addPlan">{{ "core.plan.add"|trans }}</a>
+    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
+{% endblock %}
+
+{% block body_content %}
+
+    <div class="col s12">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>{{ "core.plan.time"|trans }}</th>
+                    <th>{{ "core.plan.expireAt"|trans }}</th>
+                    <th>{{ "core.plan.time_left"|trans }}</th>
+                    <th>{{ "core.plan.description"|trans }}</th>
+                    <th>{{ "core.action"|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for plan in plans %}
+                {% set color = (plan.isExpired) ? 'red-text' : 'green-text' %}
+                <tr>
+                    <td>{{ plan.time|date('G\\hi') }}</td>
+                    <td class="{{ color }}">{{ plan.expireAt|date('d-m-Y') }}</td>
+                    <td>{{ plan|time_left }}</td>
+                    <td>{{ plan.description }}</td>
+                    <td>
+                        <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': plan.id }) }}">{{ "core.show"|trans }}</a>
+                        <a class="waves-effect waves-light btn orange" href="{{ path('core_plan_edit', { 'id': plan.id }) }}">{{ "core.edit"|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

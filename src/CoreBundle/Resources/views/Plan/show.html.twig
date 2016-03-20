@@ -1,0 +1,48 @@
+{% extends 'CoreBundle:Plan:layout.html.twig' %}
+
+{%- block actions -%}
+    <a class="waves-effect waves-light btn orange" href="{{ path('core_plan_edit', { 'id': plan.id }) }}">{{ 'core.edit'|trans }}</a>
+    {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
+    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a>
+    {{ parent() }}
+{%- endblock -%}
+
+{% block body_content %}
+    <div class="col s7">
+        {# TODO interventions #}
+    </div>
+
+    <div class="col s5">
+        <div class="card-panel">
+
+            <div class="row">
+                <div class="col s5">
+                    <strong>{{ "core.plan.enterprise"|trans }}</strong> : {{ plan.enterprise.name }} <br>
+                    <strong>{{ "core.plan.time"|trans }}</strong> : {{ plan.time|date('G\\hi') }} <br>
+                    <strong>{{ "core.plan.time_left"|trans }}</strong> : {{ plan|time_left }}
+                </div>
+
+                <div class="col s7">
+                    <strong>{{ "core.plan.expireAt"|trans }}</strong> : {{ plan.expireAt|date('d-m-Y') }} <br>
+                    <strong>{{ "core.plan.createdAt"|trans }}</strong> : {{ plan.createdAt|date('Y-m-d H:i:s') }} <br>
+                    {% if date(plan.createdAt) != date(plan.updatedAt) %}
+                    <strong>{{ "core.plan.updatedAt"|trans }}</strong> : {{ plan.updatedAt|date('Y-m-d H:i:s') }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <strong>{{ "core.plan.description"|trans }}</strong> :
+            <p>{{ plan.description }}</p>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
+{% endblock %}

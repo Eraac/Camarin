@@ -1,0 +1,18 @@
+{% set id = id|default("confirm_delete") %}
+
+<a class="waves-effect waves-light btn modal-trigger red" href="#{{ id }}">{{ "core.form.button.delete"|trans }}</a>
+
+<!-- Modal Structure -->
+<div id="{{ id }}" class="modal">
+    <div class="modal-content center-align">
+        <h4 class="red-text">{{ "core.confirm.delete"|trans }}</h4>
+
+        {{ form_start(delete_form) }}
+        {% include 'CoreBundle:Template:form/button/delete.html.twig' with {'float': ''} %}
+        {{ form_end(delete_form) }}
+    </div>
+
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
+    </div>
+</div>
