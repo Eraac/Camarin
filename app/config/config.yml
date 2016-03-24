@@ -85,3 +85,10 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             timestampable: true
+
+knp_paginator:
+    page_range: 10                     # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+    template:
+        pagination: CoreBundle:Template:sliding.html.twig     # sliding pagination controls template

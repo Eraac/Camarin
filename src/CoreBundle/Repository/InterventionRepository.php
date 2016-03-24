@@ -12,26 +12,36 @@ use CoreBundle\Entity\Enterprise;
  */
 class InterventionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllParent()
+    public function queryFindAllParent()
     {
-        $qb = $this->createQueryBuilder('i')
+        return $this->createQueryBuilder('i')
                     ->leftJoin('i.child', 'c')
                     ->addSelect('c')
                     ->where('i.parent IS NULL');
+    }
+
+    public function findAllParent()
+    {
+        $qb = $this->queryFindAllParent();
 
         return $qb->getQuery()->getResult();
     }
 
     public function findByEnterprise(Enterprise $enterprise)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->leftJoin('i.child', 'c')
-            ->addSelect('c')
-            ->where('i.parent IS NULL')
-            ->andWhere('i.enterprise = :enterprise')
-            ->setParameter('enterprise', $enterprise);
+        $qb = $this->queryByEnterprise($enterprise);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function queryByEnterprise(Enterprise $enterprise)
+    {
+        return $this->createQueryBuilder('i')
+                    ->leftJoin('i.child', 'c')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL')
+                    ->andWhere('i.enterprise = :enterprise')
+                    ->setParameter('enterprise', $enterprise);
     }
 
     public function getOrphelinIntervention(Enterprise $enterprise)

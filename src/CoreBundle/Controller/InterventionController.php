@@ -12,20 +12,29 @@ use CoreBundle\Form\Type\InterventionType;
  */
 class InterventionController extends CoreController
 {
+    const NB_INTERVENTIONS_PER_PAGE = 10;
+
     /**
      * Lists all Intervention entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('CoreBundle:Intervention');
 
-        $interventions = $repo->findAllParent();
+        $query = $repo->queryFindAllParent();
         $oprhanIntervention = $repo->findOrphan();
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_INTERVENTIONS_PER_PAGE
+        );
+
         return $this->render('CoreBundle:Intervention:index.html.twig', [
-            'interventions' => $interventions,
+            'pagination' => $pagination,
             'orphan_interventions' => $oprhanIntervention,
         ]);
     }

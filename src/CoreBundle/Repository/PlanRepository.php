@@ -11,6 +11,12 @@ use CoreBundle\Entity\Enterprise;
  */
 class PlanRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryFindAll()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.createdAt', 'DESC');
+    }
+
     public function findLastPlans(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('p')
@@ -43,12 +49,17 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
 
     public function findByEnterprise(Enterprise $enterprise)
     {
-        $qb = $this->createQueryBuilder('p')
+        $qb = $this->queryByEnterprise($enterprise);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function queryByEnterprise(Enterprise $enterprise)
+    {
+        return $this->createQueryBuilder('p')
                     ->where('p.enterprise = :enterprise')
                     ->orderBy('p.createdAt', 'DESC')
                     ->setParameter('enterprise', $enterprise);
-
-        return $qb->getQuery()->getResult();
     }
 
     public function nextExpiredAndAvailablePlan(Enterprise $enterprise)
