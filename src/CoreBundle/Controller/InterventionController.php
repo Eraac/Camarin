@@ -4,7 +4,7 @@ namespace CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Intervention;
-use CoreBundle\Form\Type\InterventionType;
+use CoreBundle\Form\Type\InterventionEditType;
 
 /**
  * Intervention controller.
@@ -62,7 +62,7 @@ class InterventionController extends CoreController
     public function editAction(Request $request, Intervention $intervention)
     {
         $deleteForm = $this->createDeleteForm($intervention);
-        $editForm = $this->createForm(InterventionType::class, $intervention);
+        $editForm = $this->createForm(InterventionEditType::class, $intervention);
         $editForm->handleRequest($request);
 
         $intervention = $this->get('core.handle.intervention')->getFirstParent($intervention);

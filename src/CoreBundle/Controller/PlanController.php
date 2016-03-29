@@ -4,7 +4,7 @@ namespace CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Plan;
-use CoreBundle\Form\Type\PlanType;
+use CoreBundle\Form\Type\PlanEditType;
 
 /**
  * Plan controller.
@@ -57,7 +57,7 @@ class PlanController extends CoreController
     public function editAction(Request $request, Plan $plan)
     {
         $deleteForm = $this->createDeleteForm($plan);
-        $editForm = $this->createForm(PlanType::class, $plan);
+        $editForm = $this->createForm(PlanEditType::class, $plan);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
