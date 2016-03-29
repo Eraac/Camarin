@@ -58,17 +58,17 @@ class Intervention
     private $plan;
 
     /**
-     * @var Intervention
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Intervention", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Intervention", mappedBy="parent")
      * @Assert\Valid
      */
-    private $child;
+    private $children;
 
     /**
      * @var Intervention
      *
-     * @ORM\OneToOne(targetEntity="CoreBundle\Entity\Intervention", inversedBy="child")
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Intervention", inversedBy="children")
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Valid
      */
@@ -84,11 +84,15 @@ class Intervention
     private $enterprise;
 
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
     }
-
+    
     /**
      * Get id
      *
@@ -227,36 +231,14 @@ class Intervention
         return $this->parent;
     }
 
-    /**
-     * Set child
-     *
-     * @param \CoreBundle\Entity\Intervention $child
-     *
-     * @return Intervention
-     */
-    public function setChild(\CoreBundle\Entity\Intervention $child = null)
-    {
-        $this->child = $child;
-
-        return $this;
-    }
-
-    /**
-     * Get child
-     *
-     * @return \CoreBundle\Entity\Intervention
-     */
-    public function getChild()
-    {
-        return $this->child;
-    }
-
     public function getSeconds($realTime = false)
     {
         $seconds = $this->time->getTimestamp() + $this->time->getOffset();
 
-        if (!$realTime && $this->getChild()) {
-            $seconds += $this->getChild()->getSeconds();
+        if (!$realTime && !$this->children->isEmpty()) {
+            foreach ($this->children as $child) {
+                $seconds += $child->getSeconds();
+            }
         }
 
         return $seconds;
@@ -284,5 +266,39 @@ class Intervention
     public function getEnterprise()
     {
         return $this->enterprise;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \CoreBundle\Entity\Intervention $child
+     *
+     * @return Intervention
+     */
+    public function addChild(\CoreBundle\Entity\Intervention $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \CoreBundle\Entity\Intervention $child
+     */
+    public function removeChild(\CoreBundle\Entity\Intervention $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

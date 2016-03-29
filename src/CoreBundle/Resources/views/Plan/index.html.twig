@@ -3,7 +3,11 @@
 {% block body %}
 
     <div class="col s12">
-        {% include 'CoreBundle:Template:list_plans.html.twig' with {'with_enterprise': true} %}
+        {% include 'CoreBundle:Template:list_plans.html.twig' with {'plans': pagination, 'with_enterprise': true} %}
+    </div>
+
+    <div class="col s12 center-align">
+        {{ knp_pagination_render(pagination) }}
     </div>
 
 {% endblock %}

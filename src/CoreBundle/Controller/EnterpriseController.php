@@ -17,17 +17,27 @@ use CoreBundle\Form\Type\PlanType;
 class EnterpriseController extends CoreController
 {
     const NB_LAST_INTERVENTION = 10;
+    const NB_ENTERPRISE_PER_PAGE = 20;
+    const NB_PLANS_PER_PAGE = 10;
+    const NB_INTERVENTIONS_PER_PAGE = 10;
 
     /**
      * Lists all Enterprise entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $enterprises = $this->getRepository()->findAll();
+        $query = $this->getRepository()->queryFindAll();
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_ENTERPRISE_PER_PAGE
+        );
 
         return $this->render('CoreBundle:Enterprise:index.html.twig', [
-            'enterprises' => $enterprises,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -82,15 +92,21 @@ class EnterpriseController extends CoreController
      *
      * @param Enterprise $enterprise
      */
-    public function showPlanAction(Enterprise $enterprise)
+    public function showPlanAction(Request $request, Enterprise $enterprise)
     {
-        $plans = $this->getRepository('CoreBundle:Plan')->findByEnterprise($enterprise);
-        // TODO add pagination
+        $query = $this->getRepository('CoreBundle:Plan')->queryByEnterprise($enterprise);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_PLANS_PER_PAGE
+        );
 
         return $this->render('CoreBundle:Enterprise:plan.html.twig', [
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
-            'plans' => $plans,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -99,17 +115,23 @@ class EnterpriseController extends CoreController
      *
      * @param Enterprise $enterprise
      */
-    public function showInterventionAction(Enterprise $enterprise)
+    public function showInterventionAction(Request $request, Enterprise $enterprise)
     {
         $repo = $this->getRepository('CoreBundle:Intervention');
-        $interventions = $repo->findByEnterprise($enterprise);
+        $query = $repo->queryByEnterprise($enterprise);
         $orphanInterventions = $repo->findOrphanByEnterprise($enterprise);
-        // TODO add pagination
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_INTERVENTIONS_PER_PAGE
+        );
 
         return $this->render('CoreBundle:Enterprise:intervention.html.twig', [
             'enterprise' => $enterprise,
             'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
-            'interventions' => $interventions,
+            'pagination' => $pagination,
             'orphan_interventions' => $orphanInterventions,
         ]);
     }

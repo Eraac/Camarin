@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for enterprise in enterprises %}
+            {% for enterprise in pagination %}
                 <tr>
                     <td>{{ enterprise.name }}</td>
                     <td>{{ enterprise.contact }}</td>
@@ -32,6 +32,10 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <div class="col s12 center-align">
+        {{ knp_pagination_render(pagination) }}
     </div>
 
 {% endblock %}

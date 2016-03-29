@@ -4,7 +4,7 @@ namespace CoreBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use CoreBundle\Entity\Plan;
-use CoreBundle\Form\Type\PlanType;
+use CoreBundle\Form\Type\PlanEditType;
 
 /**
  * Plan controller.
@@ -12,19 +12,25 @@ use CoreBundle\Form\Type\PlanType;
  */
 class PlanController extends CoreController
 {
+    const NB_PLANS_PER_PAGE = 10;
+
     /**
      * Lists all Plan entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $plans = $this->getRepository()->findAll();
+        $query = $this->getRepository()->queryFindAll();
 
-        // TODO add pagination
-        // TODO add order
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::NB_PLANS_PER_PAGE
+        );
 
         return $this->render('CoreBundle:Plan:index.html.twig', [
-            'plans' => $plans,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -51,7 +57,7 @@ class PlanController extends CoreController
     public function editAction(Request $request, Plan $plan)
     {
         $deleteForm = $this->createDeleteForm($plan);
-        $editForm = $this->createForm(PlanType::class, $plan);
+        $editForm = $this->createForm(PlanEditType::class, $plan);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
