@@ -15,7 +15,7 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
     public function queryFindAllParent()
     {
         return $this->createQueryBuilder('i')
-                    ->leftJoin('i.child', 'c')
+                    ->leftJoin('i.children', 'c')
                     ->addSelect('c')
                     ->where('i.parent IS NULL');
     }
@@ -37,7 +37,7 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
     public function queryByEnterprise(Enterprise $enterprise)
     {
         return $this->createQueryBuilder('i')
-                    ->leftJoin('i.child', 'c')
+                    ->leftJoin('i.children', 'c')
                     ->addSelect('c')
                     ->where('i.parent IS NULL')
                     ->andWhere('i.enterprise = :enterprise')
@@ -58,7 +58,7 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
     public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('i')
-                    ->leftJoin('i.child', 'c')
+                    ->leftJoin('i.children', 'c')
                     ->addSelect('c')
                     ->where('i.enterprise = :enterprise')
                     ->andWhere('i.parent IS NULL')
