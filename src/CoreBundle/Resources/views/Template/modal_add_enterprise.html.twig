@@ -1,0 +1,15 @@
+<!-- Modal Structure -->
+<div id="addEnterprise" class="modal">
+    <div class="modal-content">
+        <h4>{{ "core.confirm.add_enterprise"|trans }}</h4>
+
+        {{ form_start(add_enterprise_form) }}
+            {{ form_widget(add_enterprise_form) }}
+            {% include 'CoreBundle:Template:form/button/new.html.twig' with {'color': 'green'} %}
+        {{ form_end(add_enterprise_form) }}
+    </div>
+
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
+    </div>
+</div>

@@ -28,6 +28,7 @@ core:
         delete: "Confirmation de la suppression"
         add_plan: "Ajouter un forfait"
         add_intervention: "Ajouter une intervention"
+        add_enterprise: "Ajouter une entreprise"
     enterprise:
         see: "Voir l'entreprise"
         add: "Ajouter une entreprise"

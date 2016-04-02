@@ -36,8 +36,11 @@ class EnterpriseController extends CoreController
             self::NB_ENTERPRISE_PER_PAGE
         );
 
+        $addForm = $this->createEnterpriseForm();
+
         return $this->render('CoreBundle:Enterprise:index.html.twig', [
             'pagination' => $pagination,
+            'add_enterprise_form' => $addForm->createView(),
         ]);
     }
 
@@ -243,6 +246,14 @@ class EnterpriseController extends CoreController
         ;
     }
 
+    private function createEnterpriseForm()
+    {
+        $enterprise = new Enterprise();
+        $form = $this->createForm(EnterpriseType::class, $enterprise);
+
+        return $form;
+    }
+
     /**
      * Creates a form to add Plan to an Enterprise entity.
      *
@@ -278,7 +289,6 @@ class EnterpriseController extends CoreController
             'action' => $this->generateUrl('core_enterprise_add_intervention', ['slug' => $enterprise->getSlug()])
         ]);
     }
-
 
     protected function getRepositoryName()
     {
