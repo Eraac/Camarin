@@ -50,13 +50,11 @@ class CoreExtension extends \Twig_Extension
         return $this->secondsToString($seconds);
     }
 
-    public function hint($string)
+    public function hint($string, $position = "top-middle")
     {
         $hint = $this->translator->trans($string, [], 'hints');
 
-        dump($hint);
-
-        return 'data-hint="' . $hint . '"';
+        return 'data-hint="' . $hint . '" data-hintPosition="' . $position . '"';
     }
 
     private function secondsToString($seconds)
