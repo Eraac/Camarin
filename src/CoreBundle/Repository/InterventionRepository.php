@@ -55,6 +55,17 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getAllOrphanInterventions()
+    {
+        $qb = $this->createQueryBuilder('i')
+                ->leftJoin('i.enterprise', 'e')
+                ->addSelect('e')
+                ->where('i.plan IS NULL')
+                ->orderBy('i.createdAt', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('i')
