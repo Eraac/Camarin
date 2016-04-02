@@ -3,7 +3,7 @@
 {%- block actions -%}
     <a class="waves-effect waves-light btn orange" href="{{ path('core_plan_edit', { 'id': plan.id }) }}">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
-    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a>
+    <a {{ "hint.plan.see.enterprise"|hint('left') }} class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a>
     {{ parent() }}
 {%- endblock -%}
 

@@ -3,7 +3,7 @@
 {% block body %}
 
     {% if orphan_interventions is not empty %}
-        <div class="col s12">
+        <div {{ "hint.intervention.uncounted"|hint('left') }} class="col s12">
             <h4>{{ "core.enterprise.orphan_interventions"|trans }}</h4>
             {% include 'CoreBundle:Template:list_interventions.html.twig' with {'with_enterprise' : true, 'interventions': orphan_interventions} %}
         </div>

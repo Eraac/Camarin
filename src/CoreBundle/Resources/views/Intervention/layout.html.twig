@@ -7,7 +7,7 @@
 {%- block body -%}
     <div class="col s12 right-align">
         {% block actions %}
-        <a class="waves-effect waves-light btn" href="{{ path('core_intervention_index') }}">
+        <a {{ "hint.intervention.back_to_list"|hint('top') }} class="waves-effect waves-light btn" href="{{ path('core_intervention_index') }}">
             {{ "core.back"|trans }}
         </a>
         {% endblock %}

@@ -5,13 +5,13 @@
 {%- endblock -%}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuIntervention'>{{ "core.intervention.dropdown"|trans }}</a>
+    <a {{ "hint.enterprise.button.intervention"|hint('left') }} class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuIntervention'>{{ "core.intervention.dropdown"|trans }}</a>
     <ul id="menuIntervention" class='dropdown-content'>
         <li><a class="modal-trigger" href="#addIntervention">{{ "core.add"|trans }}</a></li>
         <li><a href="{{ url('core_enterprise_show_interventions', {'slug': enterprise.slug}) }}">{{ "core.see"|trans }}</a></li>
     </ul>
 
-    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
+    <a {{ "hint.enterprise.button.plan"|hint('left') }} class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
     <ul id="menuPlan" class='dropdown-content'>
         <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.dropdown.add"|trans }}</a></li>
         <li><a href="{{ url('core_enterprise_show_plans', {'slug': enterprise.slug}) }}">{{ "core.plan.dropdown.see"|trans }}</a></li>

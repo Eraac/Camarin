@@ -1,7 +1,7 @@
 {% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.name }}</a>
+    <a {{ "hint.enterprise.see.enterprise"|hint('left') }} class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.name }}</a>
     {{ parent() }}
 {%- endblock -%}
 

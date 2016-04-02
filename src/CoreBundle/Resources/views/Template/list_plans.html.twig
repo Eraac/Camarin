@@ -8,11 +8,11 @@
         <th>{{ "core.plan.enterprise"|trans }}</th>
         {% endif %}
         <th>{{ "core.plan.time"|trans }}</th>
-        <th>{{ "core.plan.expireAt"|trans }}</th>
+        <th {{ "hint.plan.expire_at"|hint('left') }} >{{ "core.plan.expireAt"|trans }}</th>
         <th>{{ "core.plan.time_left"|trans }}</th>
         <th>{{ "core.plan.description"|trans }}</th>
         {% if with_action %}
-        <th>{{ "core.action"|trans }}</th>
+        <th {{ "hint.plan.actions"|hint('left') }}>{{ "core.action"|trans }}</th>
         {% endif %}
     </tr>
     </thead>

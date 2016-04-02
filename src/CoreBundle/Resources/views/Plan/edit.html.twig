@@ -1,8 +1,8 @@
 {% extends 'CoreBundle:Plan:layout.html.twig' %}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': plan.id }) }}">{{ 'core.show'|trans }}</a>
-    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a>
+    <a {{ "hint.plan.see.plan"|hint('left') }} class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': plan.id }) }}">{{ 'core.show'|trans }}</a>
+    <a {{ "hint.plan.see.enterprise"|hint('left') }} class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a>
     {{ parent() }}
 {%- endblock -%}
 

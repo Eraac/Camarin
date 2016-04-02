@@ -12,7 +12,7 @@
         <th>{{ "core.intervention.date"|trans }}</th>
         <th>{{ "core.intervention.description"|trans }}</th>
         {% if with_action %}
-        <th>{{ "core.action"|trans }}</th>
+        <th {{ "hint.intervention.actions"|hint }}>{{ "core.action"|trans }}</th>
         {% endif %}
     </tr>
     </thead>
