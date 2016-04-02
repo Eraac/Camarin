@@ -9,7 +9,7 @@ services:
 
     lke_blog.twig_extension:
         class: CoreBundle\Twig\CoreExtension
-        arguments: ["@doctrine"]
+        arguments: ["@doctrine", "@translator"]
         public: false
         tags:
             - { name: twig.extension }
