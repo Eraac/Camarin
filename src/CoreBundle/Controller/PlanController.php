@@ -69,7 +69,7 @@ class PlanController extends CoreController
 
             $this->addSuccess('core.success.plan.edit');
 
-            return $this->redirectToRoute('core_plan_edit', ['id' => $plan->getId()]);
+            return $this->redirectToRoute('core_plan_show', ['id' => $plan->getId()]);
         }
 
         return $this->render('CoreBundle:Plan:edit.html.twig', [

@@ -158,7 +158,7 @@ class EnterpriseController extends CoreController
 
             $this->addSuccess("core.success.enterprise.edit");
 
-            return $this->redirectToRoute('core_enterprise_edit', ['slug' => $enterprise->getSlug()]);
+            return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
         }
 
         return $this->render('CoreBundle:Enterprise:edit.html.twig', [

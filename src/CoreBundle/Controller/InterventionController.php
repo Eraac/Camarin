@@ -76,7 +76,7 @@ class InterventionController extends CoreController
 
             $this->addSuccess('core.success.intervention.edit');
 
-            return $this->redirectToRoute('core_intervention_edit', ['id' => $intervention->getId()]);
+            return $this->redirectToRoute('core_intervention_show', ['id' => $intervention->getId()]);
         }
 
         return $this->render('CoreBundle:Intervention:edit.html.twig', [
