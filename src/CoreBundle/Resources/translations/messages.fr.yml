@@ -29,6 +29,9 @@ core:
         add_plan: "Ajouter un forfait"
         add_intervention: "Ajouter une intervention"
         add_enterprise: "Ajouter une entreprise"
+        edit_plan: "Modifier un forfait"
+        edit_intervention: "Modifier une intervention"
+        edit_enterprise: "Modifier une entreprise"
     enterprise:
         see: "Voir l'entreprise"
         add: "Ajouter une entreprise"
