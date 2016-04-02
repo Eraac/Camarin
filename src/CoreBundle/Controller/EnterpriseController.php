@@ -249,7 +249,9 @@ class EnterpriseController extends CoreController
     private function createEnterpriseForm()
     {
         $enterprise = new Enterprise();
-        $form = $this->createForm(EnterpriseType::class, $enterprise);
+        $form = $this->createForm(EnterpriseType::class, $enterprise, [
+            'action' => $this->generateUrl('core_enterprise_new')
+        ]);
 
         return $form;
     }
