@@ -4,9 +4,5 @@
 {% set modal_title = "core.confirm.edit_plan" %}
 
 {%- block modal_content -%}
-    {{ form_start(edit_plan_form) }}
-    {{ form_row(edit_plan_form.expireAt) }}
-    {{ form_row(edit_plan_form.description) }}
-    {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
-    {{ form_end(edit_plan_form) }}
+    {% include 'CoreBundle:Template:Form/entity/edit_plan.html.twig' with {'form': edit_plan_form} %}
 {%- endblock -%}

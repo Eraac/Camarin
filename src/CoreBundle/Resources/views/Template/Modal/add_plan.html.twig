@@ -4,10 +4,5 @@
 {% set modal_title = "core.confirm.add_plan" %}
 
 {%- block modal_content -%}
-    {{ form_start(add_plan_form) }}
-    {{ form_row(add_plan_form.time, {'size': 's5'}) }}
-    {{ form_row(add_plan_form.expireAt, {'size': 's7'}) }}
-    {{ form_row(add_plan_form.description) }}
-    {% include 'CoreBundle:Template:form/button/new.html.twig' %}
-    {{ form_end(add_plan_form) }}
+    {% include 'CoreBundle:Template:Form/entity/add_plan.html.twig' with {'form': add_plan_form} %}
 {%- endblock -%}

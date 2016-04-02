@@ -4,8 +4,5 @@
 {% set modal_title = "core.confirm.edit_enterprise" %}
 
 {%- block modal_content -%}
-    {{ form_start(edit_enterprise_form) }}
-    {{ form_widget(edit_enterprise_form) }}
-    {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
-    {{ form_end(edit_enterprise_form) }}
+    {% include 'CoreBundle:Template:Form/entity/add_enterprise.html.twig' with {'form': edit_enterprise_form} %}
 {%- endblock -%}

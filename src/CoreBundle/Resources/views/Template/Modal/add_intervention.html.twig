@@ -4,10 +4,5 @@
 {% set modal_title = "core.confirm.add_intervention" %}
 
 {%- block modal_content -%}
-    {{ form_start(add_intervention_form) }}
-    {{ form_row(add_intervention_form.time, {'size': 's5'}) }}
-    {{ form_row(add_intervention_form.date, {'size': 's7'}) }}
-    {{ form_row(add_intervention_form.description) }}
-    {% include 'CoreBundle:Template:form/button/new.html.twig' %}
-    {{ form_end(add_intervention_form) }}
+    {% include 'CoreBundle:Template:Form/entity/add_enterprise.html.twig' with {'form': add_intervention_form} %}
 {%- endblock -%}

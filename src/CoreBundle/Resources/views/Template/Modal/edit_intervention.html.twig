@@ -4,9 +4,5 @@
 {% set modal_title = "core.confirm.edit_intervention" %}
 
 {%- block modal_content -%}
-    {{ form_start(edit_intervention_form) }}
-    {{ form_row(edit_intervention_form.date) }}
-    {{ form_row(edit_intervention_form.description) }}
-    {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
-    {{ form_end(edit_intervention_form) }}
+    {% include 'CoreBundle:Template:Form/entity/edit_intervention.html.twig' with {'form': edit_intervention_form} %}
 {%- endblock -%}
