@@ -88,4 +88,18 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findLastInterventions($max)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.enterprise', 'e')
+                    ->leftJoin('i.children', 'c')
+                    ->addSelect('e')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL')
+                    ->orderBy('i.date', 'DESC')
+                    ->setMaxResults($max);
+
+        return $qb->getQuery()->getResult();
+    }
 }

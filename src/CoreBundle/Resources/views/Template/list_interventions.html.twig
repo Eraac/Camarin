@@ -1,4 +1,5 @@
 {% set with_enterprise = with_enterprise|default(false) %}
+{% set with_action = (with_action is defined) ? with_action : true %} {# default doesn't work when you send false (because is false == "empty") #}
 {% set real_time = real_time|default(false) %}
 
 <table class="striped">
@@ -10,7 +11,9 @@
         <th>{{ "core.intervention.time"|trans }}</th>
         <th>{{ "core.intervention.date"|trans }}</th>
         <th>{{ "core.intervention.description"|trans }}</th>
+        {% if with_action %}
         <th>{{ "core.action"|trans }}</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -22,10 +25,12 @@
             <td>{{ intervention|time(real_time) }}</td>
             <td>{{ intervention.date|date('d-m-Y') }}</td>
             <td>{{ intervention.description }}</td>
+            {% if with_action %}
             <td>
                 <a class="waves-effect waves-light btn" href="{{ path('core_intervention_show', { 'id': intervention.id }) }}">{{ "core.show"|trans }}</a>
                 <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ "core.edit"|trans }}</a>
             </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

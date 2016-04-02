@@ -57,6 +57,7 @@ core:
         createdAt: "Créé le"
         updatedAt: "Mise à jour le"
         interventions: "Interventions liées"
+        next_expired: "Prochains forfaits a expirer"
     intervention:
         add: "Ajouter une intervention"
         time: "Temps"
