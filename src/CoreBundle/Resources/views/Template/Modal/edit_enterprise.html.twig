@@ -1,15 +1,11 @@
-<!-- Modal Structure -->
-<div id="editEnterprise" class="modal">
-    <div class="modal-content">
-        <h4>{{ "core.confirm.edit_enterprise"|trans }}</h4>
+{% extends 'CoreBundle:Template:Modal/layout.html.twig' %}
 
-        {{ form_start(edit_enterprise_form) }}
-            {{ form_widget(edit_enterprise_form) }}
-            {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
-        {{ form_end(edit_enterprise_form) }}
-    </div>
+{% set modal_id = "editEnterprise" %}
+{% set modal_title = "core.confirm.edit_enterprise" %}
 
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
-    </div>
-</div>
+{%- block modal_content -%}
+    {{ form_start(edit_enterprise_form) }}
+    {{ form_widget(edit_enterprise_form) }}
+    {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
+    {{ form_end(edit_enterprise_form) }}
+{%- endblock -%}
