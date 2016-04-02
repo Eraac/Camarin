@@ -1,0 +1,16 @@
+<!-- Modal Structure -->
+<div id="editIntervention" class="modal">
+    <div class="modal-content">
+        <h4>{{ "core.confirm.edit_intervention"|trans }}</h4>
+
+        {{ form_start(edit_intervention_form) }}
+        {{ form_row(edit_intervention_form.date) }}
+        {{ form_row(edit_intervention_form.description) }}
+        {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
+        {{ form_end(edit_intervention_form) }}
+    </div>
+
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">{{ "core.close"|trans }}</a>
+    </div>
+</div>

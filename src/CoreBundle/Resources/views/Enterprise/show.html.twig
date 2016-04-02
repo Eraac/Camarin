@@ -17,7 +17,7 @@
         <li><a href="{{ url('core_enterprise_show_plans', {'slug': enterprise.slug}) }}">{{ "core.plan.dropdown.see"|trans }}</a></li>
     </ul>
 
-    <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
+    <a class="waves-effect waves-light btn orange modal-trigger" href="#editEnterprise">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
     {{ parent() }}
 {%- endblock -%}
@@ -60,6 +60,7 @@
 
     {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
     {% include 'CoreBundle:Template:modal_add_intervention.html.twig' %}
+    {% include 'CoreBundle:Template:Modal/edit_enterprise.html.twig' with {'edit_enterprise_form': edit_form } %}
 
 {% endblock %}
 

@@ -36,7 +36,7 @@ class EnterpriseController extends CoreController
             self::NB_ENTERPRISE_PER_PAGE
         );
 
-        $addForm = $this->createEnterpriseForm();
+        $addForm = $this->createAddForm();
 
         return $this->render('CoreBundle:Enterprise:index.html.twig', [
             'pagination' => $pagination,
@@ -76,6 +76,7 @@ class EnterpriseController extends CoreController
      */
     public function showAction(Enterprise $enterprise)
     {
+        $editForm = $this->createEditForm($enterprise);
         $deleteForm = $this->createDeleteForm($enterprise);
         $currentPlans = $this->getRepository('CoreBundle:Plan')->findCurrentPlans($enterprise);
         $lastInterventions = $this->getRepository('CoreBundle:Intervention')->lastInterventionByEnterprise($enterprise, self::NB_LAST_INTERVENTION);
@@ -84,6 +85,7 @@ class EnterpriseController extends CoreController
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
             'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'current_plans' => $currentPlans,
             'last_interventions' => $lastInterventions,
@@ -246,11 +248,30 @@ class EnterpriseController extends CoreController
         ;
     }
 
-    private function createEnterpriseForm()
+    /**
+     * Creates a form to add a Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createAddForm()
     {
         $enterprise = new Enterprise();
         $form = $this->createForm(EnterpriseType::class, $enterprise, [
             'action' => $this->generateUrl('core_enterprise_new')
+        ]);
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit a Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Enterprise $enterprise)
+    {
+        $form = $this->createForm(EnterpriseType::class, $enterprise, [
+            'action' => $this->generateUrl('core_enterprise_edit', ['slug' => $enterprise->getSlug()])
         ]);
 
         return $form;

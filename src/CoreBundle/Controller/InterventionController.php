@@ -45,12 +45,14 @@ class InterventionController extends CoreController
      */
     public function showAction(Intervention $intervention)
     {
+        $editForm = $this->createEditForm($intervention);
         $deleteForm = $this->createDeleteForm($intervention);
 
         $intervention = $this->get('core.handle.intervention')->getFirstParent($intervention);
 
         return $this->render('CoreBundle:Intervention:show.html.twig', [
             'intervention' => $intervention,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ]);
     }
@@ -102,6 +104,22 @@ class InterventionController extends CoreController
         }
 
         return $this->redirectToRoute('core_intervention_index');
+    }
+
+    /**
+     * Creates a form to edit a Intervention entity.
+     *
+     * @param Intervention $intervention The Intervention entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Intervention $intervention)
+    {
+        $editForm = $this->createForm(InterventionEditType::class, $intervention, [
+            'action' => $this->generateUrl('core_intervention_edit', ['id' => $intervention->getId()])
+        ]);
+
+        return $editForm;
     }
 
     /**
