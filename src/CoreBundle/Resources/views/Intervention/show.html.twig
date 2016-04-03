@@ -1,12 +1,12 @@
 {% extends 'CoreBundle:Intervention:layout.html.twig' %}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn orange" href="{{ path('core_intervention_edit', { 'id': intervention.id }) }}">{{ 'core.edit'|trans }}</a>
+    <a class="waves-effect waves-light btn orange modal-trigger" href="#editIntervention">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
-    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': intervention.enterprise.slug }) }}">{{ intervention.enterprise.name }}</a>
+    <a {{ "hint.intervention.see.enterprise"|hint('top') }} class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': intervention.enterprise.slug }) }}">{{ intervention.enterprise.name }}</a>
 
     {% if intervention.plan %}
-        <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': intervention.plan.id }) }}">{{ 'core.intervention.see.plan'|trans }}</a>
+        <a {{ "hint.intervention.see.plan"|hint('top') }} class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': intervention.plan.id }) }}">{{ 'core.intervention.see.plan'|trans }}</a>
     {% endif %}
 
     {{ parent() }}
@@ -33,6 +33,8 @@
         </div>
     </div>
 
+    {% include 'CoreBundle:Template:Modal/edit_intervention.html.twig' with {'edit_intervention_form': edit_form } %}
+
 {% endblock %}
 
 {% block javascript %}
@@ -40,6 +42,7 @@
     <script>
         $(document).ready(function(){
             $('.modal-trigger').leanModal();
+            $('select').material_select();
         });
     </script>
 {% endblock %}

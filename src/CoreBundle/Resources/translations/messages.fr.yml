@@ -28,6 +28,10 @@ core:
         delete: "Confirmation de la suppression"
         add_plan: "Ajouter un forfait"
         add_intervention: "Ajouter une intervention"
+        add_enterprise: "Ajouter une entreprise"
+        edit_plan: "Modifier un forfait"
+        edit_intervention: "Modifier une intervention"
+        edit_enterprise: "Modifier une entreprise"
     enterprise:
         see: "Voir l'entreprise"
         add: "Ajouter une entreprise"
@@ -40,7 +44,7 @@ core:
         no_plan: "Aucun forfait en cours"
         unknown: "Inconnu"
         last_interventions: "Dernière interventions"
-        orphan_interventions: "Interventions non comptabilisées"
+        orphan_interventions: "Temps non comptabilisés"
         list_interventions: "Liste des interventions"
     plan:
         dropdown:
@@ -56,6 +60,7 @@ core:
         createdAt: "Créé le"
         updatedAt: "Mise à jour le"
         interventions: "Interventions liées"
+        next_expired: "Prochains forfaits à expirer"
     intervention:
         add: "Ajouter une intervention"
         time: "Temps"

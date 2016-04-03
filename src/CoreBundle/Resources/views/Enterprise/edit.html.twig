@@ -1,18 +1,13 @@
 {% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.name }}</a>
+    <a {{ "hint.enterprise.see.enterprise"|hint('left') }} class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ enterprise.name }}</a>
     {{ parent() }}
 {%- endblock -%}
 
 {% block body_content %}
     <div class="col s6 offset-s3">
-        {{ form_start(edit_form) }}
-            {{ form_widget(edit_form) }}
-
-            {% include 'CoreBundle:Template:form/button/edit.html.twig' %}
-        {{ form_end(edit_form) }}
-
+        {% include 'CoreBundle:Template:Form/entity/edit_enterprise.html.twig' with {'form': edit_form } %}
         {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
     </div>
 {% endblock %}

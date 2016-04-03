@@ -6,14 +6,17 @@ use CoreBundle\Entity\Enterprise;
 use CoreBundle\Entity\Intervention;
 use CoreBundle\Interfaces\TimetableInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 class CoreExtension extends \Twig_Extension
 {
     private $doctrine;
+    private $translator;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $doctrine, DataCollectorTranslator $translator)
     {
         $this->doctrine = $doctrine;
+        $this->translator = $translator;
     }
 
     public function getFilters()
@@ -22,6 +25,7 @@ class CoreExtension extends \Twig_Extension
             new \Twig_SimpleFilter('time_left', [$this, 'timeLeft']),
             new \Twig_SimpleFilter('time', [$this, 'time']),
             new \Twig_SimpleFilter('time_enterprise', [$this, 'timeEnterprise']),
+            new \Twig_SimpleFilter('hint', [$this, 'hint'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -44,6 +48,13 @@ class CoreExtension extends \Twig_Extension
         $seconds = $this->doctrine->getRepository('CoreBundle:Plan')->getSecondsAvailableForEnterprise($enterprise);
 
         return $this->secondsToString($seconds);
+    }
+
+    public function hint($string, $position = "top-middle")
+    {
+        $hint = $this->translator->trans($string, [], 'hints');
+
+        return 'data-hint="' . $hint . '" data-hintPosition="' . $position . '"';
     }
 
     private function secondsToString($seconds)

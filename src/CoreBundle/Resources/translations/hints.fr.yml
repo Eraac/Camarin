@@ -1,0 +1,28 @@
+hint:
+    nav:
+        intervention: "Voir les dernières interventions effectuées"
+        plan: "Voir les derniers forfaits ajoutés"
+        enterprise: "Voir la liste des entreprises, avec le temps restant sur leurs forfaits"
+    intervention:
+        uncounted: "La liste des <strong>temps</strong> non comptabilisés. Il s'agit d'intervention (ou une partie d'une intervention), qui n'est pas associé à un forfait"
+        actions: "<strong>Voir</strong> : avoir des informations sur cette intervention <br><strong>Modifier</strong> : Modifier la date ou la description de l'intervention"
+        see:
+            intervention: "Accèder à l'intervention"
+            enterprise: "Accèder à la fiche de l'entreprise"
+            plan: "Accèder au forfait utilisé pour cette intervention"
+        back_to_list: "Retourner à la liste des interventions"
+    plan:
+        actions: "<strong>Voir</strong> : avoir des informations sur ce forfait <br><strong>Modifier</strong> : Modifier la date d'expiration ou la description du forfait"
+        expire_at: "En vert le forfait n'est pas encore expiré, en rouge le forfait est expiré"
+        see:
+            plans: "Accèder au forfait"
+            enterprise: "Accèder à la fiche de l'entreprise"
+        back_to_list: "Permet de retourner à la liste des forfaits"
+    enterprise:
+        actions: "<strong>Voir</strong> : Voir la fiche résumé de l'entreprise (dernière interventions, forfait en cours) <br><strong>Modifier</strong> : Modifier les informations d'une entreprise (nom, contact)"
+        back_to_list: "Permet de retourner à la liste des entreprises"
+        button:
+            intervention: "Permet d'ajouter rapidement une intervention, ou d'accèder à liste des interventions de cette entreprise"
+            plan: "Permet d'ajouter rapidement un forfait, ou d'accèder à liste des forfaits de cette entreprise"
+        see:
+            enterprise: "Retourne sur la fiche résumé de l'entreprise"

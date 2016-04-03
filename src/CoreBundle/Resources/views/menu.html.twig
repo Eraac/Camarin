@@ -4,15 +4,15 @@
             <a href="{{ url("core_homepage") }}" class="brand-logo">Camarin</a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{ url("core_intervention_index") }}">{{ "core.nav.intervention"|trans }}</a></li>
-                <li><a href="{{ url("core_plan_index") }}">{{ "core.nav.plan"|trans }}</a></li>
-                <li><a href="{{ url("core_enterprise_index") }}">{{ "core.nav.enterprise"|trans }}</a></li>
-                {% if is_granted("ROLE_USER") %}
+                <li><a {{ "hint.nav.intervention"|hint('top-left') }} href="{{ url("core_intervention_index") }}">{{ "core.nav.intervention"|trans }}</a></li>
+                <li><a {{ "hint.nav.plan"|hint('top-left') }} href="{{ url("core_plan_index") }}">{{ "core.nav.plan"|trans }}</a></li>
+                <li><a {{ "hint.nav.enterprise"|hint('top-left') }} href="{{ url("core_enterprise_index") }}">{{ "core.nav.enterprise"|trans }}</a></li>
+                {#{% if is_granted("ROLE_USER") %}
                     <li><a href="{{ url("fos_user_profile_edit") }}">{{ "core.nav.user.account"|trans }}</a></li>
                     <li><a href="{{ url("fos_user_security_logout") }}">{{ "core.nav.user.logout"|trans }}</a></li>
                 {% else %}
                     <li><a href="{{ url("fos_user_security_login") }}">{{ "core.nav.user.login"|trans }}</a></li>
-                {% endif %}
+                {% endif %}#}
             </ul>
         </div>
     </div>

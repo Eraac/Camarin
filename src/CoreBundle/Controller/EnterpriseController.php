@@ -36,8 +36,11 @@ class EnterpriseController extends CoreController
             self::NB_ENTERPRISE_PER_PAGE
         );
 
+        $addForm = $this->createAddForm();
+
         return $this->render('CoreBundle:Enterprise:index.html.twig', [
             'pagination' => $pagination,
+            'add_enterprise_form' => $addForm->createView(),
         ]);
     }
 
@@ -73,6 +76,7 @@ class EnterpriseController extends CoreController
      */
     public function showAction(Enterprise $enterprise)
     {
+        $editForm = $this->createEditForm($enterprise);
         $deleteForm = $this->createDeleteForm($enterprise);
         $currentPlans = $this->getRepository('CoreBundle:Plan')->findCurrentPlans($enterprise);
         $lastInterventions = $this->getRepository('CoreBundle:Intervention')->lastInterventionByEnterprise($enterprise, self::NB_LAST_INTERVENTION);
@@ -81,6 +85,7 @@ class EnterpriseController extends CoreController
             'enterprise' => $enterprise,
             'add_plan_form' => $this->createPlanForm($enterprise)->createView(),
             'add_intervention_form' => $this->createInterventionForm($enterprise)->createView(),
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'current_plans' => $currentPlans,
             'last_interventions' => $lastInterventions,
@@ -153,7 +158,7 @@ class EnterpriseController extends CoreController
 
             $this->addSuccess("core.success.enterprise.edit");
 
-            return $this->redirectToRoute('core_enterprise_edit', ['slug' => $enterprise->getSlug()]);
+            return $this->redirectToRoute('core_enterprise_show', ['slug' => $enterprise->getSlug()]);
         }
 
         return $this->render('CoreBundle:Enterprise:edit.html.twig', [
@@ -244,6 +249,35 @@ class EnterpriseController extends CoreController
     }
 
     /**
+     * Creates a form to add a Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createAddForm()
+    {
+        $enterprise = new Enterprise();
+        $form = $this->createForm(EnterpriseType::class, $enterprise, [
+            'action' => $this->generateUrl('core_enterprise_new')
+        ]);
+
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit a Enterprise entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Enterprise $enterprise)
+    {
+        $form = $this->createForm(EnterpriseType::class, $enterprise, [
+            'action' => $this->generateUrl('core_enterprise_edit', ['slug' => $enterprise->getSlug()])
+        ]);
+
+        return $form;
+    }
+
+    /**
      * Creates a form to add Plan to an Enterprise entity.
      *
      * @param Enterprise $enterprise The Enterprise entity
@@ -278,7 +312,6 @@ class EnterpriseController extends CoreController
             'action' => $this->generateUrl('core_enterprise_add_intervention', ['slug' => $enterprise->getSlug()])
         ]);
     }
-
 
     protected function getRepositoryName()
     {

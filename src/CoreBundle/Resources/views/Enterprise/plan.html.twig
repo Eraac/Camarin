@@ -2,7 +2,7 @@
 
 {% block actions %}
     <a class="modal-trigger waves-effect waves-light btn green" href="#addPlan">{{ "core.plan.add"|trans }}</a>
-    <a class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
+    <a {{ "hint.enterprise.see.enterprise"|hint('left') }} class="waves-effect waves-light btn" href="{{ url('core_enterprise_show', {'slug': enterprise.slug}) }}">{{ enterprise.name }}</a>
 {% endblock %}
 
 {% block body_content %}
@@ -15,7 +15,7 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
-    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
+    {% include 'CoreBundle:Template:Modal/add_plan.html.twig' %}
 
 {% endblock %}
 

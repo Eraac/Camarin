@@ -17,6 +17,21 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
                     ->orderBy('p.createdAt', 'DESC');
     }
 
+    public function findNextExpiredPlans($max)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->createQueryBuilder('p')
+                    ->leftJoin('p.enterprise', 'e')
+                    ->addSelect('e')
+                    ->where('p.expireAt > :now')
+                    ->setParameter('now', $now)
+                    ->orderBy('p.expireAt')
+                    ->setMaxResults($max);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findLastPlans(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('p')

@@ -40,11 +40,13 @@ class PlanController extends CoreController
      */
     public function showAction(Plan $plan)
     {
+        $editForm = $this->createEditForm($plan);
         $deleteForm = $this->createDeleteForm($plan);
         $interventions = $this->getRepository('CoreBundle:Intervention')->findByPlan($plan);
 
         return $this->render('CoreBundle:Plan:show.html.twig', [
             'plan' => $plan,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'interventions' => $interventions,
         ]);
@@ -67,7 +69,7 @@ class PlanController extends CoreController
 
             $this->addSuccess('core.success.plan.edit');
 
-            return $this->redirectToRoute('core_plan_edit', ['id' => $plan->getId()]);
+            return $this->redirectToRoute('core_plan_show', ['id' => $plan->getId()]);
         }
 
         return $this->render('CoreBundle:Plan:edit.html.twig', [
@@ -95,6 +97,22 @@ class PlanController extends CoreController
         }
 
         return $this->redirectToRoute('core_plan_index');
+    }
+
+    /**
+     * Creates a form to edit a Plan entity.
+     *
+     * @param Plan $plan The Plan entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Plan $plan)
+    {
+        $editForm = $this->createForm(PlanEditType::class, $plan, [
+            'action' => $this->generateUrl('core_plan_edit', ['id' => $plan->getId()])
+        ]);
+
+        return $editForm;
     }
 
     /**

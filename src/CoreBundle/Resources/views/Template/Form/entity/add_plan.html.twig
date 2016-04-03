@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_row(form.time, {'size': 's5'}) }}
+    {{ form_row(form.expireAt, {'size': 's7'}) }}
+    {{ form_row(form.description) }}
+    {% include 'CoreBundle:Template:form/button/new.html.twig' %}
+{{ form_end(form) }}

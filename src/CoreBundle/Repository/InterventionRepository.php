@@ -55,6 +55,17 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getAllOrphanInterventions()
+    {
+        $qb = $this->createQueryBuilder('i')
+                ->leftJoin('i.enterprise', 'e')
+                ->addSelect('e')
+                ->where('i.plan IS NULL')
+                ->orderBy('i.createdAt', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('i')
@@ -85,6 +96,20 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('i.plan IS NULL')
                     ->setParameter('enterprise', $enterprise)
                     ->orderBy('i.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findLastInterventions($max)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.enterprise', 'e')
+                    ->leftJoin('i.children', 'c')
+                    ->addSelect('e')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL')
+                    ->orderBy('i.date', 'DESC')
+                    ->setMaxResults($max);
 
         return $qb->getQuery()->getResult();
     }
