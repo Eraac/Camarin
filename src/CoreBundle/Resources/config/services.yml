@@ -7,9 +7,12 @@ services:
             class: CoreBundle\Service\HandlePlan
             arguments: ["@doctrine", "@core.handle.intervention"]
 
-    lke_blog.twig_extension:
+    core.twig_extension:
         class: CoreBundle\Twig\CoreExtension
         arguments: ["@doctrine", "@translator"]
         public: false
         tags:
             - { name: twig.extension }
+
+    core.parse_csv:
+        class: CoreBundle\Service\ParseCSV
