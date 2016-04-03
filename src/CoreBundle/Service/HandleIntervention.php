@@ -94,6 +94,6 @@ class HandleIntervention
 
     private function makeDate($seconds)
     {
-        return new \DateTime('1st january 1970' . $seconds . ' seconds');
+        return new \DateTime('1st january 1970 ' . $seconds . ' seconds');
     }
 }
