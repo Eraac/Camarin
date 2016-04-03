@@ -4,7 +4,7 @@ hint:
         plan: "Voir les derniers forfaits ajoutés"
         enterprise: "Voir la liste des entreprises, avec le temps restant sur leurs forfaits"
     intervention:
-        uncounted: "La liste des <strong>temps</strong> non comptabilisés"
+        uncounted: "La liste des <strong>temps</strong> non comptabilisés. Il s'agit d'intervention (ou une partie d'une intervention), qui n'est pas associé à un forfait"
         actions: "<strong>Voir</strong> : avoir des informations sur cette intervention <br><strong>Modifier</strong> : Modifier la date ou la description de l'intervention"
         see:
             intervention: "Accèder à l'intervention"
