@@ -18,6 +18,7 @@ hint:
             plans: "Accèder au forfait"
             enterprise: "Accèder à la fiche de l'entreprise"
         back_to_list: "Permet de retourner à la liste des forfaits"
+        next_expire: "La liste des prochains à expirer (par date, et non par rapport à leur temps)"
     enterprise:
         actions: "<strong>Voir</strong> : Voir la fiche résumé de l'entreprise (dernière interventions, forfait en cours) <br><strong>Modifier</strong> : Modifier les informations d'une entreprise (nom, contact)"
         back_to_list: "Permet de retourner à la liste des entreprises"

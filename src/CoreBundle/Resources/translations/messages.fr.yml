@@ -61,6 +61,8 @@ core:
         updatedAt: "Mise à jour le"
         interventions: "Interventions liées"
         next_expired: "Prochains forfaits à expirer"
+        list:
+            no_item: "Aucun forfait"
     intervention:
         add: "Ajouter une intervention"
         time: "Temps"
@@ -70,6 +72,8 @@ core:
         enterprise: "Entreprise"
         see:
             plan: "Voir le forfait"
+        list:
+            no_item: "Aucune intervention"
     success:
         enterprise:
             add: "Entreprise ajoutée"
