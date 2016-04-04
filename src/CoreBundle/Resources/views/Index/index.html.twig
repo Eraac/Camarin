@@ -14,7 +14,7 @@
         {% include 'CoreBundle:Template:list_interventions.html.twig' with {'interventions': last_interventions, 'with_enterprise': true, 'with_action': false} %}
     </div>
 
-    <div class="col s6">
+    <div {{ "hint.plan.next_expire"|hint }} class="col s6">
         <h4>{{ "core.plan.next_expired"|trans }}</h4>
         {% include 'CoreBundle:Template:list_plans.html.twig' with {'plans': next_expired_plans, 'with_enterprise': true, 'with_action': false} %}
     </div>
