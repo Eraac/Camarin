@@ -16,6 +16,19 @@ class HandleIntervention
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @param Intervention $intervention
+     * @return Intervention
+     */
+    public function getFirstParent(Intervention $intervention)
+    {
+        while(($parent = $intervention->getParent()) !== null) {
+            $intervention = $parent;
+        }
+
+        return $intervention;
+    }
+
     public function persistIntervention(Enterprise $enterprise, Intervention $intervention)
     {
         $plan = $this->getNextExpiredAndAvailablePlan($enterprise);
@@ -27,7 +40,7 @@ class HandleIntervention
         }
     }
 
-    public function splitIntervention(Enterprise $enterprise, Plan $plan, Intervention $intervention)
+    public function splitIntervention(Enterprise $enterprise, Plan $plan, Intervention $intervention, Intervention $parent = null)
     {
         $maxTime = $plan->getTimeLeft();
         $timeLeft = $intervention->getSeconds() - $maxTime;
@@ -42,14 +55,14 @@ class HandleIntervention
             $nextPlan = $this->getNextExpiredAndAvailablePlan($enterprise);
 
             $childIntervention = new Intervention();
-            $childIntervention->setParent($intervention);
+            $childIntervention->setParent((is_null($parent) ? $intervention : $parent));
             $childIntervention->setDescription(""); // can not be null
             $childIntervention->setTime($this->makeDate($timeLeft));
 
             if (is_null($nextPlan)) {
                 $this->persist($enterprise, $childIntervention, $nextPlan);
             } else {
-                $this->splitIntervention($enterprise, $nextPlan, $childIntervention);
+                $this->splitIntervention($enterprise, $nextPlan, $childIntervention, $intervention);
             }
         }
     }
@@ -81,6 +94,6 @@ class HandleIntervention
 
     private function makeDate($seconds)
     {
-        return new \DateTime('1st january 1970' . $seconds . ' seconds');
+        return new \DateTime('1st january 1970 ' . $seconds . ' seconds');
     }
 }

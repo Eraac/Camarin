@@ -1,9 +1,7 @@
 {% extends 'CoreBundle:Enterprise:layout.html.twig' %}
 
 {% block actions %}
-    <a class="waves-effect waves-light btn right green" href="{{ path('core_enterprise_new') }}">
-        {{ "core.enterprise.add"|trans }}
-    </a>
+    <a class="modal-trigger waves-effect waves-light btn green" href="#addEnterprise">{{ "core.enterprise.add"|trans }}</a>
 {% endblock %}
 
 {% block body_content %}
@@ -15,15 +13,15 @@
                     <th>{{ "core.enterprise.name"|trans }}</th>
                     <th>{{ "core.enterprise.contact"|trans }}</th>
                     <th>{{ "core.enterprise.time_left"|trans }}</th>
-                    <th>{{ "core.action"|trans }}</th>
+                    <th {{ "hint.enterprise.actions"|hint('left') }}>{{ "core.action"|trans }}</th>
                 </tr>
             </thead>
             <tbody>
-            {% for enterprise in enterprises %}
+            {% for enterprise in pagination %}
                 <tr>
                     <td>{{ enterprise.name }}</td>
                     <td>{{ enterprise.contact }}</td>
-                    <td>0 {# TODO time_left #}</td>
+                    <td>{{ enterprise|time_enterprise }}</td>
                     <td>
                         <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ "core.show"|trans }}</a>
                         <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ "core.edit"|trans }}</a>
@@ -34,4 +32,19 @@
         </table>
     </div>
 
+    <div class="col s12 center-align">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    {% include 'CoreBundle:Template:Modal/add_enterprise.html.twig' %}
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.modal-trigger').leanModal();
+        });
+    </script>
 {% endblock %}

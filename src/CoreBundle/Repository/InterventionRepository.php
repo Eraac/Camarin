@@ -12,26 +12,36 @@ use CoreBundle\Entity\Enterprise;
  */
 class InterventionRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllParent()
+    public function queryFindAllParent()
     {
-        $qb = $this->createQueryBuilder('i')
-                    ->leftJoin('i.child', 'c')
+        return $this->createQueryBuilder('i')
+                    ->leftJoin('i.children', 'c')
                     ->addSelect('c')
                     ->where('i.parent IS NULL');
+    }
+
+    public function findAllParent()
+    {
+        $qb = $this->queryFindAllParent();
 
         return $qb->getQuery()->getResult();
     }
 
     public function findByEnterprise(Enterprise $enterprise)
     {
-        $qb = $this->createQueryBuilder('i')
-            ->leftJoin('i.child', 'c')
-            ->addSelect('c')
-            ->where('i.parent IS NULL')
-            ->andWhere('i.enterprise = :enterprise')
-            ->setParameter('enterprise', $enterprise);
+        $qb = $this->queryByEnterprise($enterprise);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function queryByEnterprise(Enterprise $enterprise)
+    {
+        return $this->createQueryBuilder('i')
+                    ->leftJoin('i.children', 'c')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL')
+                    ->andWhere('i.enterprise = :enterprise')
+                    ->setParameter('enterprise', $enterprise);
     }
 
     public function getOrphelinIntervention(Enterprise $enterprise)
@@ -41,6 +51,65 @@ class InterventionRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('i.plan IS NULL')
                     ->setParameter('enterprise', $enterprise)
                     ->orderBy('i.createdAt', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getAllOrphanInterventions()
+    {
+        $qb = $this->createQueryBuilder('i')
+                ->leftJoin('i.enterprise', 'e')
+                ->addSelect('e')
+                ->where('i.plan IS NULL')
+                ->orderBy('i.createdAt', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function lastInterventionByEnterprise(Enterprise $enterprise, $limit)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.children', 'c')
+                    ->addSelect('c')
+                    ->where('i.enterprise = :enterprise')
+                    ->andWhere('i.parent IS NULL')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('i.date', 'DESC')
+                    ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOrphan()
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->where('i.plan IS NULL')
+            ->orderBy('i.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findOrphanByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->where('i.enterprise = :enterprise')
+                    ->andWhere('i.plan IS NULL')
+                    ->setParameter('enterprise', $enterprise)
+                    ->orderBy('i.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findLastInterventions($max)
+    {
+        $qb = $this->createQueryBuilder('i')
+                    ->leftJoin('i.enterprise', 'e')
+                    ->leftJoin('i.children', 'c')
+                    ->addSelect('e')
+                    ->addSelect('c')
+                    ->where('i.parent IS NULL')
+                    ->orderBy('i.date', 'DESC')
+                    ->setMaxResults($max);
 
         return $qb->getQuery()->getResult();
     }

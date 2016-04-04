@@ -1,0 +1,43 @@
+{% set with_enterprise = with_enterprise|default(false) %}
+{% set with_action = (with_action is defined) ? with_action : true %} {# default doesn't work when you send false (because is false == "empty") #}
+
+{% if plans is not empty %}
+<table class="striped">
+    <thead>
+    <tr>
+        {% if with_enterprise %}
+        <th>{{ "core.plan.enterprise"|trans }}</th>
+        {% endif %}
+        <th>{{ "core.plan.time"|trans }}</th>
+        <th {{ "hint.plan.expire_at"|hint('left') }} >{{ "core.plan.expireAt"|trans }}</th>
+        <th>{{ "core.plan.time_left"|trans }}</th>
+        <th>{{ "core.plan.description"|trans }}</th>
+        {% if with_action %}
+        <th {{ "hint.plan.actions"|hint('left') }}>{{ "core.action"|trans }}</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for plan in plans %}
+        {% set color = (plan.isExpired) ? 'red-text' : 'green-text' %}
+        <tr>
+            {% if with_enterprise %}
+            <td><a href="{{ url('core_enterprise_show', {'slug': plan.enterprise.slug}) }}">{{ plan.enterprise.name }}</a></td>
+            {% endif %}
+            <td>{{ plan.time|date('G\\hi') }}</td>
+            <td class="{{ color }}">{{ plan.expireAt|date('d-m-Y') }}</td>
+            <td>{{ plan|time_left }}</td>
+            <td>{{ plan.description }}</td>
+            {% if with_action %}
+            <td>
+                <a class="waves-effect waves-light btn" href="{{ path('core_plan_show', { 'id': plan.id }) }}">{{ "core.show"|trans }}</a>
+                <a class="waves-effect waves-light btn orange" href="{{ path('core_plan_edit', { 'id': plan.id }) }}">{{ "core.edit"|trans }}</a>
+            </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <i class="material-icons">error_outline</i> {{ "core.plan.list.no_item"|trans }}
+{% endif %}

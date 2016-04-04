@@ -11,6 +11,30 @@ use CoreBundle\Entity\Enterprise;
  */
 class PlanRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryFindAll()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.createdAt', 'DESC');
+    }
+
+    public function findNextExpiredPlans($max)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->createQueryBuilder('p')
+                    ->leftJoin('p.enterprise', 'e')
+                    ->addSelect('e')
+                    ->where('p.expireAt > :now')
+                    ->andWhere('(TIME_TO_SEC(p.time) > (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                                OR
+                                (SELECT COUNT(i2.id) FROM CoreBundle:Intervention i2 WHERE i2.plan = p) = 0)')
+                    ->setParameter('now', $now)
+                    ->orderBy('p.expireAt')
+                    ->setMaxResults($max);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findLastPlans(Enterprise $enterprise, $limit)
     {
         $qb = $this->createQueryBuilder('p')
@@ -43,12 +67,17 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
 
     public function findByEnterprise(Enterprise $enterprise)
     {
-        $qb = $this->createQueryBuilder('p')
+        $qb = $this->queryByEnterprise($enterprise);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function queryByEnterprise(Enterprise $enterprise)
+    {
+        return $this->createQueryBuilder('p')
                     ->where('p.enterprise = :enterprise')
                     ->orderBy('p.createdAt', 'DESC')
                     ->setParameter('enterprise', $enterprise);
-
-        return $qb->getQuery()->getResult();
     }
 
     public function nextExpiredAndAvailablePlan(Enterprise $enterprise)
@@ -68,5 +97,72 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
                     ->orderBy('p.expireAt', 'ASC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getSecondsAvailableForEnterprise(Enterprise $enterprise)
+    {
+        $secondsIntervention = $this->getSecondsInterventionForAvailablePlanByEnterprise($enterprise);
+        $secondsPlan = $this->getSecondsForAvailablePlanByEnterprise($enterprise);
+        $secondsOrphan = $this->getSecondsForOrphanInterventionByEnterprise($enterprise);
+
+        return $secondsPlan - $secondsIntervention - $secondsOrphan;
+    }
+
+    private function getSecondsInterventionForAvailablePlanByEnterprise(Enterprise $enterprise)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->_em->createQueryBuilder()
+            ->select('
+                        (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                    ')
+            ->from('CoreBundle:Plan', 'p')
+            ->where('p.expireAt > :now')
+            ->andWhere('p.enterprise = :enterprise')
+            ->setParameters([
+                'now' => $now,
+                'enterprise' => $enterprise
+            ]);
+
+        return $this->array_sum($qb->getQuery()->getScalarResult());
+    }
+
+    private function getSecondsForAvailablePlanByEnterprise(Enterprise $enterprise)
+    {
+        $now = new \DateTime();
+
+        $qb = $this->createQueryBuilder('p')
+            ->select('SUM(TIME_TO_SEC(p.time))')
+            ->where('p.expireAt > :now')
+            ->andWhere('p.enterprise = :enterprise')
+            ->setParameters([
+                'now' => $now,
+                'enterprise' => $enterprise
+            ]);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function getSecondsForOrphanInterventionByEnterprise(Enterprise $enterprise)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('SUM(TIME_TO_SEC(i.time))')
+            ->from('CoreBundle:Intervention', 'i')
+            ->where('i.enterprise = :enterprise')
+            ->andWhere('i.plan IS NULL')
+            ->setParameter('enterprise', $enterprise);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function array_sum(array $rows)
+    {
+        $sum = 0;
+
+        foreach($rows as $row) {
+            $sum += $row["1"];
+        }
+
+        return $sum;
     }
 }

@@ -10,4 +10,9 @@ namespace CoreBundle\Repository;
  */
 class EnterpriseRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function queryFindAll()
+    {
+        return $this->createQueryBuilder('e')
+                    ->orderBy('e.name');
+    }
 }

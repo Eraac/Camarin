@@ -5,31 +5,38 @@
 {%- endblock -%}
 
 {%- block actions -%}
-    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuIntervention'>{{ "core.intervention.dropdown"|trans }}</a>
+    <a {{ "hint.enterprise.button.intervention"|hint('left') }} class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuIntervention'>{{ "core.intervention.dropdown"|trans }}</a>
     <ul id="menuIntervention" class='dropdown-content'>
         <li><a class="modal-trigger" href="#addIntervention">{{ "core.add"|trans }}</a></li>
         <li><a href="{{ url('core_enterprise_show_interventions', {'slug': enterprise.slug}) }}">{{ "core.see"|trans }}</a></li>
     </ul>
 
-    <a class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
+    <a {{ "hint.enterprise.button.plan"|hint('left') }} class="waves-effect waves-light btn dropdown-button green" href='#' data-activates='menuPlan'>{{ "core.plan.dropdown.title"|trans }}</a>
     <ul id="menuPlan" class='dropdown-content'>
         <li><a class="modal-trigger" href="#addPlan">{{ "core.plan.dropdown.add"|trans }}</a></li>
         <li><a href="{{ url('core_enterprise_show_plans', {'slug': enterprise.slug}) }}">{{ "core.plan.dropdown.see"|trans }}</a></li>
     </ul>
 
-    <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ 'core.edit'|trans }}</a>
+    <a class="waves-effect waves-light btn orange modal-trigger" href="#editEnterprise">{{ 'core.edit'|trans }}</a>
     {% include 'CoreBundle:Template:confirm_delete.html.twig' %}
     {{ parent() }}
 {%- endblock -%}
 
 {% block body_content %}
 
-    <div class="col s5">
-        <div class="card-panel">
-            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : 0h {# TODO time_left #}
-        </div>
+    <div class="col s8">
+        <h4>{{ "core.enterprise.last_interventions"|trans }}</h4>
+        {% include 'CoreBundle:Template:list_interventions.html.twig' with {'interventions': last_interventions} %}
+    </div>
+
+    <div class="col s4">
 
         <h4>{{ "core.enterprise.current_plan"|trans }}</h4>
+
+        <div class="card-panel">
+            <strong>{{ "core.enterprise.time_left"|trans }}</strong> : {{ enterprise|time_enterprise }}
+        </div>
+
         {% if current_plans is not empty %}
             <ul class="collection">
                 {% for plan in current_plans %}
@@ -51,8 +58,9 @@
         {% endif %}
     </div>
 
-    {% include 'CoreBundle:Template:modal_add_plan.html.twig' %}
-    {% include 'CoreBundle:Template:modal_add_intervention.html.twig' %}
+    {% include 'CoreBundle:Template:Modal/add_plan.html.twig' %}
+    {% include 'CoreBundle:Template:Modal/add_intervention.html.twig' %}
+    {% include 'CoreBundle:Template:Modal/edit_enterprise.html.twig' with {'edit_enterprise_form': edit_form } %}
 
 {% endblock %}
 
