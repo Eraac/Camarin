@@ -2,6 +2,7 @@
 {% set with_action = (with_action is defined) ? with_action : true %} {# default doesn't work when you send false (because is false == "empty") #}
 {% set real_time = real_time|default(false) %}
 
+{% if interventions is not empty %}
 <table class="striped">
     <thead>
     <tr>
@@ -35,3 +36,6 @@
     {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <i class="material-icons">error_outline</i> {{ "core.intervention.list.no_item"|trans }}
+{% endif %}
