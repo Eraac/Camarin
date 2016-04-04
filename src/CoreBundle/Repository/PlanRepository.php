@@ -25,6 +25,9 @@ class PlanRepository extends \Doctrine\ORM\EntityRepository
                     ->leftJoin('p.enterprise', 'e')
                     ->addSelect('e')
                     ->where('p.expireAt > :now')
+                    ->andWhere('(TIME_TO_SEC(p.time) > (SELECT SUM(TIME_TO_SEC(i.time)) FROM CoreBundle:Intervention i WHERE i.plan = p)
+                                OR
+                                (SELECT COUNT(i2.id) FROM CoreBundle:Intervention i2 WHERE i2.plan = p) = 0)')
                     ->setParameter('now', $now)
                     ->orderBy('p.expireAt')
                     ->setMaxResults($max);
