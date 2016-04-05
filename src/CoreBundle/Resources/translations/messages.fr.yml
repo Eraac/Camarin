@@ -46,6 +46,8 @@ core:
         last_interventions: "Dernière interventions"
         orphan_interventions: "Temps non comptabilisés"
         list_interventions: "Liste des interventions"
+        list:
+            no_item: "Aucune entrerprise"
     plan:
         dropdown:
             title: "Forfait"

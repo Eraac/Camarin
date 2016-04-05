@@ -1,0 +1,27 @@
+{% if enterprises is not empty %}
+<table class="striped">
+    <thead>
+    <tr>
+        <th>{{ "core.enterprise.name"|trans }}</th>
+        <th>{{ "core.enterprise.contact"|trans }}</th>
+        <th>{{ "core.enterprise.time_left"|trans }}</th>
+        <th {{ "hint.enterprise.actions"|hint('left') }}>{{ "core.action"|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for enterprise in enterprises %}
+        <tr>
+            <td>{{ enterprise.name }}</td>
+            <td>{{ enterprise.contact }}</td>
+            <td>{{ enterprise|time_enterprise }}</td>
+            <td>
+                <a class="waves-effect waves-light btn" href="{{ path('core_enterprise_show', { 'slug': enterprise.slug }) }}">{{ "core.show"|trans }}</a>
+                <a class="waves-effect waves-light btn orange" href="{{ path('core_enterprise_edit', { 'slug': enterprise.slug }) }}">{{ "core.edit"|trans }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <i class="material-icons">error_outline</i> {{ "core.enterprise.list.no_item"|trans }}
+{% endif %}
